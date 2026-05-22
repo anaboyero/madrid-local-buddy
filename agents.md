@@ -5,7 +5,7 @@ Eres un agente al que le gusta interactuar conmigo. Siempre estas dispuesto a bu
 Leer specs/mission.md
 
 *** Decisiones técnicas: ***
-Leer specs/techstack.md. 
+Leer specs/techstack.md.
 
 *** Plan: ***
 Leer specs/roadmap.md
@@ -30,8 +30,15 @@ PASO 7. Feedback.
 
 *** Codigo de conducta ***
 
-No elijas tecnologias ni tomes decisiones de diseno sin debatirlas conmigo antes. Las decisiones las tomamos entre llos dos y yo tengo la ultima palabra. Recuerda argumentar las propuestas y estar abierto a plantear alternativas. 
+No elijas tecnologias ni tomes decisiones de diseno sin debatirlas conmigo antes. Las decisiones las tomamos entre llos dos y yo tengo la ultima palabra. Recuerda argumentar las propuestas y estar abierto a plantear alternativas.
 
+
+---------------------------------------------------------------------
+Enfoque de implementacion (API-first)
+
+* Fase actual: backend primero; ver specs/techstack.md y specs/roadmap.md (Fase 1 sin UI).
+* Construir y validar POST /api/requests antes de cualquier interfaz.
+* La UI publica queda para Fase 1b; no adelantar componentes visuales sin acuerdo.
 
 ---------------------------------------------------------------------
 Test driven design
@@ -45,22 +52,36 @@ Development principles:
 * Write the minimal implementation needed to pass tests.
 * Refactor only after tests pass.
 * Keep business logic independent from UI rendering.
-* Prefer pure functions and composable modules.
-* Avoid large React components with embedded logic.
+* Prefer small, testable units (domain and application layers).
 * Favor simple and maintainable solutions over clever abstractions.
-* Use strict TypeScript typing.
 * All new features should include:
 
   * unit tests
   * integration tests when relevant
-* Use:
-
-  * Vitest for unit/integration tests
-  * React Testing Library for component behavior
-  * Playwright for E2E flows
 * Test behavior, not implementation details.
 * Avoid snapshot-heavy testing.
 * The project is an MVP, but code quality and maintainability matter.
+
+### Fase 1 — Backend (acordado)
+
+* Language: **Java** with **Spring Boot 3**, build **Maven**.
+* Contract: specs/api-requests-contract.md
+* Testing:
+
+  * **JUnit 5** for unit tests (domain, application)
+  * **Mockito** for mocks (e.g. EmailSender port)
+  * **Spring Boot Test / MockMvc** for HTTP integration tests
+* Run locally as executable **JAR** (see techstack.md).
+* Manual check: curl or similar against the running API.
+
+### Fase 1b y posteriores — Frontend (cuando se acuerde)
+
+* Stack UI: TBD (see techstack.md).
+* Testing (when UI exists):
+
+  * Vitest for unit/integration where applicable
+  * React Testing Library for component behavior (if React)
+  * Playwright for E2E flows
 
 ---------------------------------------------------------------------
 
@@ -74,6 +95,6 @@ whether they are essential for the MVP
 Ask for confirmation before adding dependencies.
 ---------------------------------------------------------------------
 
-Al final de cada sesion, documenta siempre las cosas que hayamos acordado y cerrado para que al dia siguiente pueda saber donde nos quedamos. 
+Al final de cada sesion, documenta siempre las cosas que hayamos acordado y cerrado para que al dia siguiente pueda saber donde nos quedamos.
 
 Termina la sesion dandome algun feedback sobre mi manera de interactuar contigo? Ofreceme consejos para que pueda sacarte mejor partido en base a como me relaciono contigo.

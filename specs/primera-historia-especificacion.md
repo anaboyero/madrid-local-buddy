@@ -1,6 +1,6 @@
 # Primera historia — Especificación acordada
 
-**Estado:** acuerdos cerrados (PASO 1). Implementación y detalle técnico del envío de email (opción B) pendientes para la siguiente sesión.
+**Estado:** acuerdos cerrados (PASO 1). Implementación por fases: **API primero** (Fase 1 en [`roadmap.md`](roadmap.md)); **UI en Fase 1b**.
 
 **Contexto:** El contenido de `readme.md` describe la **visión del proyecto final**. Esta historia es un **MVP mínimo**: landing + formulario + notificación por correo al anfitrión.
 
@@ -49,9 +49,9 @@ Como visitante interesado en un plan auténtico en Madrid, quiero ver tipos de e
 | Experiencia seleccionada | Sí | Identificador (`id`) o nombre estable acordado en implementación (p. ej. `cinema`, `casa-de-campo-walk`). |
 | Email del visitante | Sí | Validación de formato. |
 | Comentario libre | No* | Ej.: “I’d like Saturday afternoon”. |
-| Nivel de inglés | No* | Valor acordado en UI (texto libre o select — definir en diseño/implementación). |
+| Años en Madrid (`yearsInMadrid`) | No* | Sustituye “nivel de inglés” (alineado con visitante nativo en [`mission.md`](mission.md)). Ver contrato API. |
 
-\*Obligatoriedad de comentario y nivel: no exigidos en el acuerdo; si en implementación se marcan opcionales, el email debe reflejar vacío o “not provided” de forma clara.
+\*Obligatoriedad de comentario y años en Madrid: no exigidos; si faltan, el email indica `not provided`.
 
 ---
 
@@ -62,7 +62,7 @@ El email que recibe el anfitrión debe incluir como mínimo:
 - Experiencia seleccionada (id o nombre legible).
 - Email del visitante.
 - Comentario libre del visitante.
-- Nivel de inglés indicado por el visitante.
+- Años en Madrid (`yearsInMadrid`) si el visitante lo indica.
 - **Marca temporal** de envío (recomendado en acuerdo; incluir en implementación).
 
 Asunto y cuerpo en un estilo claro (preferiblemente inglés en el cuerpo del mail alineado con la experiencia del producto).
@@ -91,11 +91,16 @@ Asunto y cuerpo en un estilo claro (preferiblemente inglés en el cuerpo del mai
 
 ---
 
-## Decisiones técnicas pendientes (próxima sesión)
+## Implementación acordada (constitución técnica)
 
-- **Envío:** Opción **B** — API propia (p. ej. `POST /api/request` o equivalente) + proveedor de email (Resend, SendGrid, Postmark, etc.). Comparar proveedor y hosting en debate; no fijar sin confirmación del anfitrión.
-- Stack frontend/backend, estructura del repo, tests (Vitest, RTL, Playwright según `AGENTS.md`): **PASO 2** en adelante.
-- Copy exacto de las dos descripciones en inglés y valores del campo “nivel de inglés” (texto libre vs select).
+- **Fase 1:** solo API — Spring Boot 3, Maven, `POST /api/requests`, JUnit/MockMvc. Ver [`techstack.md`](techstack.md) y [`api-requests-contract.md`](api-requests-contract.md).
+- **Fase 1b:** UI (landing, formulario, confirmación en pantalla).
+- **Email:** puerto `EmailSender`; proveedor concreto TBD (recomendación Resend vía REST cuando se implemente 1.5).
+- **Deploy Fase 1:** JAR local.
+
+## Pendiente menor
+
+- Copy exacto en inglés de las dos descripciones (sobre todo para Fase 1b).
 
 ---
 
@@ -118,3 +123,4 @@ Según `AGENTS.md`:
 | Fecha | Notas |
 |-------|--------|
 | 2026-05-21 | Cierre PASO 1: 2 experiencias, formulario, UI en inglés, confirmación en pantalla, opción B para email (implementación al día siguiente). |
+| 2026-05-22 | API-first; Java/Spring Boot; UI Fase 1b; campo `yearsInMadrid`; contrato en api-requests-contract.md. |
