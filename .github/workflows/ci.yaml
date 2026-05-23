@@ -1,0 +1,29 @@
+name: Java CI with Maven
+
+# ¿Cuándo se ejecuta? Al abrir o actualizar una PR hacia main, o al hacer push a main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Clonar el repositorio en la máquina virtual de GitHub
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Configurar el entorno de Java
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    # 3. Compilar el código y ejecutar todos los tests
+    - name: Build and Run Tests with Maven
+      run: mvn clean test
