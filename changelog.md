@@ -6,6 +6,10 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-05-23
 
+- PASO 6 slice reserva: `ExperienceRequestValidator`, `POST /api/requests`; 18 tests verdes.
+- Slice POST simplificada: solo validación de reserva; tests sin email; notificación aplazada (roadmap 1.4).
+- Slice GET cerrado; rama `feature/slice-post-requests`; spec `slice-post-reserva-experiencia.md`.
+- Ids de experiencia: string → integer (`1`, `2`); `findById(int)`.
 - TDD slice GET: tests aprobados (PASO 5), `ExperienceCatalog` implementado (PASO 6), 7 tests verdes.
 - Test `findById_returnsCasaDeCampoWhenIdMatches` añadido.
 - Slice reducido: solo `GET /api/experiences`; eliminados POST/validación/email del código; `ExperienceRequest.nativeEnglishSpeaker`.
