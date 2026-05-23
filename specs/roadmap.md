@@ -10,10 +10,10 @@ Ver [`mission.md`](mission.md), [`techstack.md`](techstack.md), [`AGENTS.md`](..
 
 | Paso | Entregable | Estado |
 |------|------------|--------|
-| 0.1 | `mission.md` | acordado (pendiente OK final del anfitrión) |
+| 0.1 | `mission.md` | acordado |
 | 0.2 | `techstack.md` | acordado |
 | 0.3 | `roadmap.md` | acordado |
-| 0.4 | Contrato API mínimo | acordado — [`api-requests-contract.md`](api-requests-contract.md) |
+| 0.4 | Contrato API mínimo | acordado — [`api-contract.md`](api-contract.md) |
 
 ---
 
@@ -25,13 +25,13 @@ La UI y criterios de pantalla quedan en **Fase 1b**.
 | Paso | Entregable | Estado |
 |------|------------|--------|
 | 1.1 | Proyecto Spring Boot 3 + Maven + JUnit 5 + estructura por capas | acordado |
-| 1.2 | Catálogo estático de 2 experiencias en dominio | acordado |
+| 1.2 | Catálogo estático de 2 experiencias + `GET /api/experiences` | acordado |
 | 1.3 | Validación de payload + construcción del cuerpo del email | acordado |
 | 1.4 | `POST /api/requests` + tests (MockMvc, `EmailSender` mock) | acordado |
 | 1.5 | Adaptador de email real (HTTP REST; proveedor TBD, ver techstack) | acordado |
 | 1.6 | Ejecutable JAR local documentado (`java -jar`) | acordado |
 
-**Criterio de éxito Fase 1:** un `curl` válido devuelve `201` y el anfitrión recibe el correo (o, en modo `log`, el contenido aparece en logs).
+**Criterio de éxito Fase 1:** `curl` al GET devuelve las 2 experiencias; un `curl` POST válido devuelve `201` y el anfitrión recibe el correo (o, en modo `log`, el contenido aparece en logs).
 
 ---
 
@@ -40,7 +40,7 @@ La UI y criterios de pantalla quedan en **Fase 1b**.
 | Paso | Entregable | Estado |
 |------|------------|--------|
 | 1b.1 | Landing en inglés + 2 experiencias + formulario | debate |
-| 1b.2 | Consumo de `POST /api/requests` | debate |
+| 1b.2 | Consumo de `GET /api/experiences` y `POST /api/requests` | debate |
 | 1b.3 | Tests RTL + E2E Playwright (opcional) | debate |
 | 1b.4 | Deploy web (TBD) | debate |
 
@@ -63,3 +63,4 @@ Detalle según `readme.md` y prioridad del anfitrión cuando Fase 1 esté hecha.
 | Fecha | Cambio |
 |-------|--------|
 | 2026-05-22 | Roadmap inicial: API-first Java, UI en Fase 1b, JAR local. |
+| 2026-05-23 | Paso 1.2 incluye `GET /api/experiences`; contrato en `api-contract.md`. |

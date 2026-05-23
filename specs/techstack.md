@@ -13,7 +13,7 @@
 | [`AGENTS.md`](../AGENTS.md) | Cómo trabajamos (TDD, pasos, conducta) |
 | [`mission.md`](mission.md) | Producto y límites |
 | [`roadmap.md`](roadmap.md) | Orden de entregas |
-| [`api-requests-contract.md`](api-requests-contract.md) | Contrato HTTP mínimo (PASO 4) |
+| [`api-contract.md`](api-contract.md) | Contrato HTTP Fase 1 (GET catálogo + POST solicitud) |
 | [`primera-historia-especificacion.md`](primera-historia-especificacion.md) | Alcance funcional de la primera historia |
 
 Los principios de ingeniería (TDD, capas, calidad) están en `AGENTS.md`. Este archivo fija **decisiones técnicas concretas**.
@@ -60,8 +60,8 @@ No usar Vitest ni RTL en Fase 1 (ver `AGENTS.md`).
 
 | Decisión | Valor |
 |----------|--------|
-| Endpoint principal | `POST /api/requests` |
-| Contrato | [`api-requests-contract.md`](api-requests-contract.md) |
+| Endpoints Fase 1 | `GET /api/experiences`, `POST /api/requests` |
+| Contrato | [`api-contract.md`](api-contract.md) |
 | Prueba manual | `curl`, Bruno o Postman |
 
 ---

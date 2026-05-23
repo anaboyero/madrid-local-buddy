@@ -1,6 +1,6 @@
 # Mission — Madrid Local Buddy
 
-**Estado:** borrador acordado con el anfitrión (revisar y marcar `acordado` cuando dé el OK).
+**Estado:** acordado (2026-05-23).
 
 ---
 

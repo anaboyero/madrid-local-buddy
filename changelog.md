@@ -4,6 +4,13 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ---
 
+## 2026-05-23
+
+- `mission.md` marcado **acordado** (OK del anfitrión).
+- `primera-historia-especificacion.md` simplificada: slice vertical Fase 1 (GET + POST) / Fase 1b (UI).
+- Contrato API unificado en `specs/api-contract.md` (`GET /api/experiences`, `POST /api/requests`); `api-requests-contract.md` → redirect.
+- `roadmap.md` y `techstack.md` alineados con el GET de catálogo.
+
 ## 2026-05-22
 
 - Sesion cerrada: constitucion lista; siguiente PASO 4 (tests API).

@@ -1,126 +1,97 @@
-# Primera historia — Especificación acordada
+# Primera historia — slice vertical mínimo
 
-**Estado:** acuerdos cerrados (PASO 1). Implementación por fases: **API primero** (Fase 1 en [`roadmap.md`](roadmap.md)); **UI en Fase 1b**.
-
-**Contexto:** El contenido de `readme.md` describe la **visión del proyecto final**. Esta historia es un **MVP mínimo**: landing + formulario + notificación por correo al anfitrión.
-
----
-
-## Objetivo de la historia
-
-Como visitante interesado en un plan auténtico en Madrid, quiero ver tipos de experiencia, elegir una, dejar mis datos y enviar una solicitud, para que el anfitrión reciba un correo con la propuesta y pueda responder fuera de la web.
+**Estado:** acordado (PASO 3, 2026-05-23).  
+**Contrato HTTP:** [`api-contract.md`](api-contract.md). **Stack:** [`techstack.md`](techstack.md). **UI:** Fase 1b en [`roadmap.md`](roadmap.md).
 
 ---
 
-## Alcance incluido
+## Historia
 
-- Una web con **descripciones** de tipos de experiencia (contenido **estático** al inicio; sin panel de administración).
-- **Dos** experiencias únicamente:
-  1. **Cine** (cinema / film-related outing — copy en inglés por definir).
-  2. **Paseo por la Casa de Campo** (walk — copy en inglés por definir).
-- Formulario de solicitud con los campos acordados (ver abajo).
-- **Interfaz íntegramente en inglés** (textos de UI, etiquetas, mensajes de error y confirmación).
-- Tras un envío correcto: **mensaje de confirmación en pantalla** (sin correo automático al visitante en esta historia).
-- Validación antes de enviar:
-  - Experiencia seleccionada obligatoria.
-  - Email del visitante obligatorio y con **formato válido**.
-  - Mensajes de error claros; no perder lo que el usuario ya escribió si falla el envío.
-- Texto legal mínimo de **privacidad** (uso del email solo para responder a esta solicitud).
-- Envío al anfitrión mediante **API propia + servicio de email** (opción B). Detalle de proveedor, hosting y variables de entorno: **debate e implementación en sesión posterior**.
+Como visitante que busca un plan auténtico en Madrid, quiero **ver las experiencias disponibles**, **elegir una**, **dejar mis datos** y **enviar una solicitud**, para que el anfitrión reciba un correo y pueda responder fuera de la web.
 
 ---
 
-## Alcance excluido (esta historia)
+## Slice vertical (qué entra en cada fase)
 
-- Más de dos experiencias o inventario editable desde la app.
-- Agenda, calendario, disponibilidad, filtros de perfil.
-- Login, cuentas de usuario, reseñas.
-- Pagos, chat in-app, punto de encuentro automático.
-- Copia por correo al visitante tras enviar.
-- Anti-spam avanzado (rate limit, CAPTCHA, etc.) — **revisar solo si aparece abuso**; acordado posponer en v1.
-- Cualquier funcionalidad descrita en `readme.md` que no esté listada arriba en “Alcance incluido”.
+| Capacidad | Fase 1 — API | Fase 1b — UI |
+|-----------|--------------|--------------|
+| Listar experiencias (id, título, descripción en inglés) | `GET /api/experiences` | Landing consume el GET |
+| Enviar solicitud | `POST /api/requests` | Formulario consume el POST |
+| Validación (experiencia + email) | API `400` en inglés | Mismos errores en pantalla |
+| Notificar al anfitrión | Email vía puerto `EmailSender` | — |
+| Confirmación al visitante | `201` + `{ "ok": true }` | Mensaje en pantalla |
+| Aviso de privacidad | — | Texto visible en la web |
+
+**Idioma público:** inglés (respuestas API, descripciones del catálogo, email al anfitrión, UI en 1b).
 
 ---
 
-## Formulario — campos
+## Catálogo (estático, sin administración)
+
+Exactamente **dos** experiencias:
+
+| `id` | `title` (inglés) | `description` (inglés, copy provisional) |
+|------|------------------|----------------------------------------|
+| `cinema` | Cinema | An evening at a local cinema — film and conversation in English. |
+| `casa-de-campo-walk` | Casa de Campo walk | A relaxed walk in Casa de Campo — green Madrid away from the tourist centre. |
+
+El copy se puede pulir en Fase 1b; Fase 1 debe devolver texto legible en inglés para ambas.
+
+---
+
+## Solicitud (`POST /api/requests`)
 
 | Campo | Obligatorio | Notas |
-|--------|-------------|--------|
-| Experiencia seleccionada | Sí | Identificador (`id`) o nombre estable acordado en implementación (p. ej. `cinema`, `casa-de-campo-walk`). |
-| Email del visitante | Sí | Validación de formato. |
-| Comentario libre | No* | Ej.: “I’d like Saturday afternoon”. |
-| Años en Madrid (`yearsInMadrid`) | No* | Sustituye “nivel de inglés” (alineado con visitante nativo en [`mission.md`](mission.md)). Ver contrato API. |
+|-------|-------------|--------|
+| `experienceId` | Sí | Debe existir en el catálogo. |
+| `visitorEmail` | Sí | Formato de email válido. |
+| `comment` | No | Si falta o vacío → `not provided` en el email. |
+| `yearsInMadrid` | No | Contexto del visitante ([`mission.md`](mission.md)). Si falta o vacío → `not provided`. |
 
-\*Obligatoriedad de comentario y años en Madrid: no exigidos; si faltan, el email indica `not provided`.
-
----
-
-## Contenido del correo al anfitrión
-
-El email que recibe el anfitrión debe incluir como mínimo:
-
-- Experiencia seleccionada (id o nombre legible).
-- Email del visitante.
-- Comentario libre del visitante.
-- Años en Madrid (`yearsInMadrid`) si el visitante lo indica.
-- **Marca temporal** de envío (recomendado en acuerdo; incluir en implementación).
-
-Asunto y cuerpo en un estilo claro (preferiblemente inglés en el cuerpo del mail alineado con la experiencia del producto).
+Detalle de respuestas y ejemplos: [`api-contract.md`](api-contract.md).
 
 ---
 
-## Flujo feliz
+## Email al anfitrión
 
-1. El visitante abre la web y ve las dos experiencias con descripción.
-2. Selecciona una experiencia.
-3. Completa email, comentario (opcional) y nivel de inglés (opcional según diseño).
-4. Envía la solicitud.
-5. Ve un mensaje de confirmación en pantalla.
-6. El anfitrión recibe un correo con todos los datos acordados.
+Tras un `POST` válido, el servidor envía (o registra en modo `log`) un correo en inglés con: experiencia, email del visitante, comentario, años en Madrid, **marca temporal**. Ver formato en el contrato.
+
+Proveedor concreto y envío real: paso **1.5** del roadmap (no bloquea Fase 1 con mock/log).
 
 ---
 
-## Criterios de “hecho”
+## Fuera de alcance (esta historia)
 
-- [ ] Se muestran exactamente las dos experiencias con descripción legible en inglés.
-- [ ] No se puede enviar sin experiencia + email válido.
-- [ ] Errores de validación y de envío son comprensibles y no borran el formulario sin necesidad.
+- Más de dos experiencias o catálogo editable.
+- Persistencia de solicitudes, login, pagos, calendario, anti-spam avanzado.
+- Correo automático al visitante.
+- Cualquier cosa de `readme.md` no listada arriba.
+
+---
+
+## Criterios de hecho
+
+### Fase 1 (API)
+
+- [ ] `GET /api/experiences` devuelve **exactamente** las dos experiencias con `id`, `title` y `description` en inglés.
+- [ ] `POST /api/requests` con payload válido → `201` y notificación al anfitrión (email real, mock en tests o `log` en local).
+- [ ] Payload inválido o `experienceId` desconocido → `400` con `errors` en inglés.
+- [ ] Fallo del adaptador de email tras validación correcta → `502`/`503` según contrato.
+- [ ] Prueba manual documentada: `curl` al GET y al POST.
+
+### Fase 1b (UI — aplazada)
+
+- [ ] Landing en inglés: lista desde `GET /api/experiences`, formulario → `POST /api/requests`.
+- [ ] No enviar sin experiencia + email válido; errores claros sin borrar el formulario.
 - [ ] Confirmación en pantalla tras envío correcto.
-- [ ] El anfitrión recibe el correo con todos los campos acordados + timestamp.
-- [ ] Aviso de privacidad visible donde corresponda (footer o junto al formulario).
+- [ ] Aviso de privacidad visible.
 
 ---
 
-## Implementación acordada (constitución técnica)
-
-- **Fase 1:** solo API — Spring Boot 3, Maven, `POST /api/requests`, JUnit/MockMvc. Ver [`techstack.md`](techstack.md) y [`api-requests-contract.md`](api-requests-contract.md).
-- **Fase 1b:** UI (landing, formulario, confirmación en pantalla).
-- **Email:** puerto `EmailSender`; proveedor concreto TBD (recomendación Resend vía REST cuando se implemente 1.5).
-- **Deploy Fase 1:** JAR local.
-
-## Pendiente menor
-
-- Copy exacto en inglés de las dos descripciones (sobre todo para Fase 1b).
-
----
-
-## Referencia al flujo de trabajo
-
-Según `AGENTS.md`:
-
-1. ~~PASO 1 — Especificaciones~~ (este documento).
-2. PASO 2 — Diseño genérico del MVP.
-3. PASO 3 — Primera historia en formato slice vertical.
-4. PASO 4 — Tests sin código de producción.
-5. PASO 5 — Revisión de tests por el anfitrión.
-6. PASO 6 — Implementación hasta pasar tests.
-7. PASO 7 — Feedback.
-
----
-
-## Historial de acuerdos
+## Historial
 
 | Fecha | Notas |
 |-------|--------|
-| 2026-05-21 | Cierre PASO 1: 2 experiencias, formulario, UI en inglés, confirmación en pantalla, opción B para email (implementación al día siguiente). |
-| 2026-05-22 | API-first; Java/Spring Boot; UI Fase 1b; campo `yearsInMadrid`; contrato en api-requests-contract.md. |
+| 2026-05-21 | PASO 1 inicial: 2 experiencias, formulario, email al anfitrión. |
+| 2026-05-22 | API-first; `yearsInMadrid`; UI en Fase 1b. |
+| 2026-05-23 | Spec simplificada; slice vertical con `GET /api/experiences` + `POST /api/requests`; criterios separados Fase 1 / 1b. |
