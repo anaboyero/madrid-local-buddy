@@ -26,8 +26,8 @@ Como visitante que busca un plan auténtico en Madrid, quiero **ver las experien
 
 | `id` | `title` | `description` (provisional) |
 |------|---------|----------------------------|
-| `cinema` | Cinema | An evening at a local cinema — film and conversation in English. |
-| `casa-de-campo-walk` | Casa de Campo walk | A relaxed walk in Casa de Campo — green Madrid away from the tourist centre. |
+| `1` | Cinema | An evening at a local cinema — film and conversation in English. |
+| `2` | Casa de Campo walk | A relaxed walk in Casa de Campo — green Madrid away from the tourist centre. |
 
 ---
 
@@ -37,7 +37,7 @@ Como visitante que busca un plan auténtico en Madrid, quiero **ver las experien
 
 | Campo | Tipo | Notas |
 |-------|------|--------|
-| `experienceId` | string | Id del catálogo. |
+| `experienceId` | integer | Id del catálogo (`1`, `2`, …). |
 | `visitorEmail` | string | Email del visitante. |
 | `comment` | string | Opcional. |
 | `nativeEnglishSpeaker` | boolean | Alineado con visitante nativo en [`mission.md`](mission.md). |
@@ -68,3 +68,4 @@ Sin validación ni email al anfitrión en este slice.
 |-------|--------|
 | 2026-05-23 | Slice reducido: solo GET catálogo; `nativeEnglishSpeaker` en `ExperienceRequest`. |
 | 2026-05-23 | Versión anterior incluía POST, validación y email (aplazado). |
+| 2026-05-23 | `id` de experiencias y `experienceId` pasan de string a integer (`1` = cinema, `2` = casa de campo). |

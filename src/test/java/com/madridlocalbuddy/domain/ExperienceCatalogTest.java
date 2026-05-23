@@ -28,7 +28,7 @@ class ExperienceCatalogTest {
 
     @Test
     void findById_returnsCinemaWhenIdMatches() {
-        Optional<Experience> found = catalog.findById(ContractCatalog.CINEMA_ID);
+        Optional<Experience> found = catalog.findById(String.valueOf(ContractCatalog.CINEMA_ID));
 
         assertTrue(found.isPresent());
         assertEquals(ContractCatalog.CINEMA, found.get());
@@ -36,7 +36,8 @@ class ExperienceCatalogTest {
 
     @Test
     void findById_returnsCasaDeCampoWhenIdMatches() {
-        Optional<Experience> found = catalog.findById(ContractCatalog.CASA_DE_CAMPO_WALK_ID);
+        Optional<Experience> found =
+                catalog.findById(String.valueOf(ContractCatalog.CASA_DE_CAMPO_WALK_ID));
 
         assertTrue(found.isPresent());
         assertEquals(ContractCatalog.CASA_DE_CAMPO_WALK, found.get());
@@ -44,6 +45,6 @@ class ExperienceCatalogTest {
 
     @Test
     void findById_returnsEmptyForUnknownId() {
-        assertTrue(catalog.findById("unknown-experience").isEmpty());
+        assertTrue(catalog.findById(String.valueOf(999)).isEmpty());
     }
 }

@@ -9,8 +9,8 @@
 
 | `id` | `title` |
 |------|---------|
-| `cinema` | Cinema |
-| `casa-de-campo-walk` | Casa de Campo walk |
+| `1` | Cinema |
+| `2` | Casa de Campo walk |
 
 ---
 
@@ -25,12 +25,12 @@ Devuelve las experiencias disponibles (contenido estático en servidor).
 ```json
 [
   {
-    "id": "cinema",
+    "id": 1,
     "title": "Cinema",
     "description": "An evening at a local cinema — film and conversation in English."
   },
   {
-    "id": "casa-de-campo-walk",
+    "id": 2,
     "title": "Casa de Campo walk",
     "description": "A relaxed walk in Casa de Campo — green Madrid away from the tourist centre."
   }
@@ -59,7 +59,7 @@ No implementar en el slice actual. Borrador de cuerpo para cuando se retome:
 
 ```json
 {
-  "experienceId": "cinema",
+  "experienceId": 1,
   "visitorEmail": "visitor@example.com",
   "comment": "I'd like Saturday afternoon",
   "nativeEnglishSpeaker": true
@@ -68,7 +68,7 @@ No implementar en el slice actual. Borrador de cuerpo para cuando se retome:
 
 | Campo | Tipo | Notas |
 |-------|------|--------|
-| `experienceId` | string | Id del catálogo. |
+| `experienceId` | integer | Id del catálogo (`1`, `2`, …). |
 | `visitorEmail` | string | Email del visitante. |
 | `comment` | string | Opcional. |
 | `nativeEnglishSpeaker` | boolean | Si el visitante es hablante nativo de inglés ([`mission.md`](mission.md)). |
@@ -84,3 +84,4 @@ Validación, errores HTTP y email al anfitrión: se definirán al retomar este e
 | 2026-05-22 | Contrato inicial: `POST /api/requests`. |
 | 2026-05-23 | Añadido `GET /api/experiences`. |
 | 2026-05-23 | Slice actual = solo GET; POST aplazado; `nativeEnglishSpeaker` sustituye `yearsInMadrid`. |
+| 2026-05-23 | `id` de experiencias y `experienceId` pasan de string a integer (`1` = cinema, `2` = casa de campo). |
