@@ -26,12 +26,12 @@ La UI y criterios de pantalla quedan en **Fase 1b**.
 |------|------------|--------|
 | 1.1 | Proyecto Spring Boot 3 + Maven + JUnit 5 + estructura por capas | acordado |
 | 1.2 | Catálogo estático de 2 experiencias + `GET /api/experiences` | hecho |
-| 1.3 | Validación de payload + construcción del cuerpo del email | aplazado |
-| 1.4 | `POST /api/requests` + tests (MockMvc, `EmailSender` mock) | aplazado |
+| 1.3 | Reserva: validar `ExperienceRequest` + `POST /api/requests` (`201`/`400`) | hecho |
+| 1.4 | Notificación email al anfitrión (`EmailSender`, servicio, `503` si falla) | aplazado |
 | 1.5 | Adaptador de email real (HTTP REST; proveedor TBD, ver techstack) | acordado |
 | 1.6 | Ejecutable JAR local documentado (`java -jar`) | acordado |
 
-**Criterio de éxito slice actual (1.2):** `curl` al GET devuelve las 2 experiencias en inglés. POST/email: aplazado (ver `api-contract.md`).
+**Criterio de éxito slice GET (1.2):** hecho. **Slice reserva (1.3):** [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md). Email: paso 1.4.
 
 ---
 
@@ -64,3 +64,5 @@ Detalle según `readme.md` y prioridad del anfitrión cuando Fase 1 esté hecha.
 |-------|--------|
 | 2026-05-22 | Roadmap inicial: API-first Java, UI en Fase 1b, JAR local. |
 | 2026-05-23 | Paso 1.2 incluye `GET /api/experiences`; contrato en `api-contract.md`. |
+| 2026-05-23 | Slice reserva (solo validación); email aplazado a 1.4. |
+| 2026-05-23 | Slice GET cerrado; rama `feature/slice-post-requests`. |

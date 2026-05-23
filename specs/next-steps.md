@@ -1,20 +1,19 @@
 # Próxima sesión
 
-**Última sesión:** 2026-05-23 — Slice `GET /api/experiences` cerrado con TDD (PASO 4–6).
+**Última sesión:** 2026-05-23 — Slice reserva (`POST /api/requests`) implementada; 18 tests en verde.
 
 ## Dónde nos quedamos
 
-- **PASO 6 hecho:** `ExperienceCatalog` implementado; **7 tests en verde**.
-- **Roadmap 1.2:** hecho.
-- **Pendiente menor:** probar `curl` con JAR/`spring-boot:run` (criterio spec).
-- **Aplazado:** `POST /api/requests`, validación, email; Fase 1b UI.
+- **Rama:** `feature/slice-post-requests`
+- **PASO 6 hecho:** `ExperienceRequestValidator`, `RequestsController`, respuestas `201`/`400`.
+- **Pendiente:** slice email (roadmap 1.4), merge de rama, prueba manual `curl`.
 
 ## Siguiente paso (a acordar)
 
-- Documentar/ejecutar prueba manual `curl`, o
-- Retomar `POST /api/requests` (nuevo ciclo TDD rojo → verde), o
+- Spec + TDD slice **notificación email** (1.4), o
+- Merge a `main`, o
 - Fase 1b (UI).
 
 ## Frase para retomar
 
-> GET de experiencias en verde. Lee `specs/next-steps.md` y `specs/api-contract.md`.
+> Reserva en verde. Siguiente: email al anfitrión (1.4) o cerrar rama.

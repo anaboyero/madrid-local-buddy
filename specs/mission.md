@@ -108,7 +108,7 @@ Un único anfitrión local que:
 
 - **Roadmap:** [`roadmap.md`](roadmap.md) — pasos de producto e ingeniería.
 - **Tech stack:** [`techstack.md`](techstack.md) — cómo se construye.
-- **Primera historia:** [`primera-historia-especificacion.md`](primera-historia-especificacion.md) — primer slice vertical.
+- **Primera historia:** [`primera-historia-especificacion.md`](primera-historia-especificacion.md) — slice GET (hecho) + slice POST ([`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md)).
 
 ---
 

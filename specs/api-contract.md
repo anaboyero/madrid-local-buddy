@@ -1,7 +1,7 @@
 # API contract — Madrid Local Buddy (Fase 1)
 
 **Estado:** acordado (2026-05-23).  
-**Alcance actual:** solo `GET /api/experiences`. `POST /api/requests` aplazado (borrador abajo).
+**Alcance actual:** `GET /api/experiences` y `POST /api/requests` (reserva, sin email). Notificación: roadmap 1.4.
 
 ---
 
@@ -53,27 +53,32 @@ curl -s http://localhost:8080/api/experiences
 
 ---
 
-## `POST /api/requests` (aplazado)
+## `POST /api/requests` (reserva — acordado)
 
-No implementar en el slice actual. Borrador de cuerpo para cuando se retome:
+Acepta o rechaza una **reserva** según validez del payload. **Sin envío de email** en este slice (ver roadmap 1.4).
+
+Detalle: [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md).
+
+### Request
 
 ```json
 {
   "experienceId": 1,
   "visitorEmail": "visitor@example.com",
-  "comment": "I'd like Saturday afternoon",
+  "comment": "Saturday afternoon would work best for me",
   "nativeEnglishSpeaker": true
 }
 ```
 
-| Campo | Tipo | Notas |
-|-------|------|--------|
-| `experienceId` | integer | Id del catálogo (`1`, `2`, …). |
-| `visitorEmail` | string | Email del visitante. |
-| `comment` | string | Opcional. |
-| `nativeEnglishSpeaker` | boolean | Si el visitante es hablante nativo de inglés ([`mission.md`](mission.md)). |
+### Responses
 
-Validación, errores HTTP y email al anfitrión: se definirán al retomar este endpoint.
+| Código | Cuándo | Cuerpo |
+|--------|--------|--------|
+| `201` | Reserva válida | `{ "ok": true }` |
+| `400` | Datos inválidos | `{ "ok": false, "errors": [...] }` |
+| `405` | Método no `POST` | — |
+
+Email al anfitrión: **aplazado** (slice posterior).
 
 ---
 

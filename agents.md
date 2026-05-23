@@ -85,7 +85,7 @@ PASO 5. El anfitrión revisa y aprueba los tests (siguen en **rojo**).
 
 PASO 6. **Solo entonces** implementas el codigo de produccion minimo para que los tests pasen (fase **verde**).
 
-PASO 7. Yo te doy feedback de producto e iteracion (que funciono, que cambiar en specs o roadmap). **No** es el feedback de como interactuo contigo; ese va solo en `docs/` al cerrar sesion (ver mas abajo).
+PASO 7. Yo (Ana) te doy feedback a ti (agente) de producto e iteracion (que funciono, que cambiar en specs o roadmap). **No** es el feedback de como interactuo contigo; ese va solo en `docs/` al cerrar sesion (ver mas abajo).
 
 
 
