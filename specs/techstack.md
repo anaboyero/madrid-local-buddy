@@ -36,10 +36,8 @@ Los principios de ingeniería (TDD, capas, calidad) están en `AGENTS.md`. Este 
 
 ```text
 src/main/java/.../
-  domain/           # catálogo, validación, modelo de solicitud, texto del email
-  application/      # caso de uso SubmitExperienceRequest
-  infrastructure/   # adaptador EmailSender, configuración
-  api/              # controlador REST POST /api/requests
+  domain/           # catálogo, ExperienceRequest (futuro POST)
+  api/              # controlador REST GET /api/experiences
 src/test/java/.../  # espejo para tests
 ```
 
@@ -60,7 +58,8 @@ No usar Vitest ni RTL en Fase 1 (ver `AGENTS.md`).
 
 | Decisión | Valor |
 |----------|--------|
-| Endpoints Fase 1 | `GET /api/experiences`, `POST /api/requests` |
+| Endpoint slice actual | `GET /api/experiences` |
+| Endpoints aplazados | `POST /api/requests` |
 | Contrato | [`api-contract.md`](api-contract.md) |
 | Prueba manual | `curl`, Bruno o Postman |
 

@@ -1,16 +1,16 @@
 # API contract — Madrid Local Buddy (Fase 1)
 
-**Estado:** acordado (PASO 3, 2026-05-23).  
-**Implementación:** Spring Boot 3, Maven. Ver [`techstack.md`](techstack.md).
+**Estado:** acordado (2026-05-23).  
+**Alcance actual:** solo `GET /api/experiences`. `POST /api/requests` aplazado (borrador abajo).
 
 ---
 
 ## Catálogo de referencia
 
-| `id` | `title` | Uso |
-|------|---------|-----|
-| `cinema` | Cinema | GET + POST + email |
-| `casa-de-campo-walk` | Casa de Campo walk | GET + POST + email |
+| `id` | `title` |
+|------|---------|
+| `cinema` | Cinema |
+| `casa-de-campo-walk` | Casa de Campo walk |
 
 ---
 
@@ -53,105 +53,27 @@ curl -s http://localhost:8080/api/experiences
 
 ---
 
-## `POST /api/requests`
+## `POST /api/requests` (aplazado)
 
-Crea una solicitud y notifica al anfitrión por correo (según configuración de `EmailSender`).
-
-### Request
-
-**Headers**
-
-```http
-Content-Type: application/json
-```
-
-**Body**
+No implementar en el slice actual. Borrador de cuerpo para cuando se retome:
 
 ```json
 {
   "experienceId": "cinema",
   "visitorEmail": "visitor@example.com",
   "comment": "I'd like Saturday afternoon",
-  "yearsInMadrid": "about 2 years"
+  "nativeEnglishSpeaker": true
 }
 ```
 
-| Campo | Tipo | Obligatorio | Reglas |
-|-------|------|-------------|--------|
-| `experienceId` | string | Sí | Id del catálogo (tabla arriba). |
-| `visitorEmail` | string | Sí | Formato de email válido. |
-| `comment` | string | No | Si falta o está vacío → `not provided` en el email. |
-| `yearsInMadrid` | string | No | Si falta o está vacío → `not provided`. |
+| Campo | Tipo | Notas |
+|-------|------|--------|
+| `experienceId` | string | Id del catálogo. |
+| `visitorEmail` | string | Email del visitante. |
+| `comment` | string | Opcional. |
+| `nativeEnglishSpeaker` | boolean | Si el visitante es hablante nativo de inglés ([`mission.md`](mission.md)). |
 
-### Responses
-
-#### `201 Created`
-
-```json
-{
-  "ok": true
-}
-```
-
-#### `400 Bad Request`
-
-```json
-{
-  "ok": false,
-  "errors": [
-    {
-      "field": "visitorEmail",
-      "message": "Invalid email address"
-    }
-  ]
-}
-```
-
-- `errors` puede incluir varios campos.
-- Mensajes en **inglés**.
-
-#### `405 Method Not Allowed`
-
-Solo se admite `POST` en esta ruta.
-
-#### `502 Bad Gateway` (o `503 Service Unavailable`)
-
-Validación correcta pero fallo al enviar el correo.
-
-```json
-{
-  "ok": false,
-  "message": "Unable to send notification email"
-}
-```
-
-### Ejemplo `curl`
-
-```bash
-curl -s -X POST http://localhost:8080/api/requests \
-  -H "Content-Type: application/json" \
-  -d "{\"experienceId\":\"cinema\",\"visitorEmail\":\"visitor@example.com\",\"comment\":\"Saturday afternoon\",\"yearsInMadrid\":\"1 year\"}"
-```
-
----
-
-## Email al anfitrión (comportamiento esperado)
-
-No es respuesta HTTP; lo genera el servidor tras un `POST` válido.
-
-**Asunto (ejemplo):** `New Madrid Local Buddy request: Cinema`
-
-**Cuerpo (ejemplo):**
-
-```text
-Experience: Cinema (cinema)
-Visitor email: visitor@example.com
-Comment: I'd like Saturday afternoon
-Years in Madrid: about 2 years
-Submitted at: 2026-05-22T14:30:00+02:00
-```
-
-Si `comment` o `yearsInMadrid` faltan o están en blanco → línea `not provided` para ese campo.
+Validación, errores HTTP y email al anfitrión: se definirán al retomar este endpoint.
 
 ---
 
@@ -159,5 +81,6 @@ Si `comment` o `yearsInMadrid` faltan o están en blanco → línea `not provide
 
 | Fecha | Cambio |
 |-------|--------|
-| 2026-05-22 | Contrato inicial (`api-requests-contract.md`): solo `POST /api/requests`. |
-| 2026-05-23 | Renombrado a `api-contract.md`; añadido `GET /api/experiences`; copy en inglés en catálogo. |
+| 2026-05-22 | Contrato inicial: `POST /api/requests`. |
+| 2026-05-23 | Añadido `GET /api/experiences`. |
+| 2026-05-23 | Slice actual = solo GET; POST aplazado; `nativeEnglishSpeaker` sustituye `yearsInMadrid`. |

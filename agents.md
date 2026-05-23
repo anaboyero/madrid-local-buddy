@@ -79,11 +79,11 @@ PASO 2. Pensamos en conjunto en diseno generico del MVP.
 
 PASO 3. Planeamos la primera historia con formato slice vertical (el orden de construccion sigue el roadmap; hoy API antes que UI).
 
-PASO 4. Implementamos los tests sin escribir codigo.
+PASO 4. **Solo tests** (fase **roja**). Ver reglas TDD abajo: sin implementar el comportamiento en `src/main/java`.
 
-PASO 5. Leo tests y te doy feedback hasta que esta fase este aprobada.
+PASO 5. El anfitrión revisa y aprueba los tests (siguen en **rojo**).
 
-PASO 6. Implementas el codigo para pasar los tests.
+PASO 6. **Solo entonces** implementas el codigo de produccion minimo para que los tests pasen (fase **verde**).
 
 PASO 7. Yo te doy feedback de producto e iteracion (que funciono, que cambiar en specs o roadmap). **No** es el feedback de como interactuo contigo; ese va solo en `docs/` al cerrar sesion (ver mas abajo).
 
@@ -91,7 +91,7 @@ PASO 7. Yo te doy feedback de producto e iteracion (que funciono, que cambiar en
 
 *** Enfoque de implementacion (API-first) ***
 
-* Fase actual (ver roadmap): **backend primero** — validar `POST /api/requests` antes de cualquier interfaz.
+* Fase actual (ver roadmap y `specs/next-steps.md`): **backend primero** — API antes que UI; el endpoint concreto lo marca el slice activo.
 * Fase 1: solo API (sin UI). Fase 1b: landing y formulario cuando se acuerde.
 * No adelantar pantallas, componentes ni estilos sin acuerdo explicito.
 
@@ -104,18 +104,42 @@ No elijas tecnologias ni tomes decisiones de diseno sin debatirlas conmigo antes
 Test driven design (TDD)
 ---------------------------------------------------------------------
 
-Este proyecto sigue TDD: Red → Green → Refactor.
+Este proyecto sigue TDD estricto: **Red → Green → Refactor**, alineado con los PASOS 4–6.
 
-Principios comunes (todas las fases):
+### Que significa cada fase
 
-* Definir comportamiento con tests antes que codigo de produccion.
-* Implementacion minima para pasar tests; refactor solo con tests en verde.
+| Fase TDD | PASO | Que hace el agente | Criterio de salida |
+|----------|------|-------------------|-------------------|
+| **Rojo** | 4 (+ revision 5) | Escribe tests que describen el comportamiento acordado | `mvn test` **falla** por comportamiento no implementado |
+| **Verde** | 6 | Implementa el minimo en `src/main/java` | `mvn test` **pasa** |
+| **Refactor** | 6 (mismo paso, con tests verdes) | Mejora codigo sin cambiar comportamiento | Tests siguen en verde |
+
+**Si al terminar el PASO 4 los tests ya pasan, no se ha hecho TDD** — se ha implementado antes de tiempo. Parar, revertir la implementacion de negocio o dejar stubs que fallen, y dejar los tests en rojo hasta el PASO 6.
+
+### PASO 4 — solo tests (reglas obligatorias)
+
+* Escribir tests en `src/test/java` que reflejen el contrato (`specs/api-contract.md`) y la historia activa.
+* **Prohibido** en PASO 4 implementar logica de negocio ni endpoints que hagan pasar esos tests (catalogo, validacion, controladores con respuesta correcta, email, etc.).
+* **Permitido** solo el andamiaje minimo para compilar y ejecutar la suite, si hace falta:
+  * `pom.xml`, dependencias acordadas, `.gitignore`
+  * Clase `@SpringBootApplication`
+  * Firmas vacias, clases esqueleto o stubs que **no satisfagan** los tests (p. ej. listas vacias, `UnsupportedOperationException`, endpoints sin mapear)
+* Tras escribir los tests, **ejecutar `mvn test` y comprobar que fallan** (rojo). Informar al anfitrión cuantos fallan y por que.
+* **No** pasar al PASO 6 ni “dejar ya hecho” el feature porque parezca rapido.
+
+### PASO 6 — implementacion
+
+* Implementar solo lo necesario para que pasen los tests aprobados en el PASO 5.
+* Refactorizar solo con la suite en verde.
+
+### Principios (todas las fases)
+
+* Tests de **comportamiento** (entrada/salida, HTTP, dominio visible), no de detalles internos.
 * Logica de negocio independiente de la UI.
-* Soluciones simples; tests de comportamiento, no de detalles internos.
-* Evitar tests basados en snapshots salvo acuerdo explicito.
-* MVP, pero con calidad y mantenibilidad.
+* Soluciones simples; evitar snapshots salvo acuerdo explicito.
+* MVP con calidad y mantenibilidad.
 
-Herramientas, lenguaje, frameworks, fases (1 / 1b) y stack de tests concretos: **`specs/techstack.md`** (fuente unica). No duplicar aqui; si algo cambia en el proyecto, actualizar solo ese archivo.
+Herramientas, lenguaje, frameworks y stack de tests: **`specs/techstack.md`** (fuente unica). No duplicar aqui.
 
 ---------------------------------------------------------------------
 

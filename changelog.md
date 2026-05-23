@@ -6,6 +6,10 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-05-23
 
+- TDD slice GET: tests aprobados (PASO 5), `ExperienceCatalog` implementado (PASO 6), 7 tests verdes.
+- Test `findById_returnsCasaDeCampoWhenIdMatches` añadido.
+- Slice reducido: solo `GET /api/experiences`; eliminados POST/validación/email del código; `ExperienceRequest.nativeEnglishSpeaker`.
+- Catálogo implementado; tests de catálogo y MockMvc.
 - `mission.md` marcado **acordado** (OK del anfitrión).
 - `primera-historia-especificacion.md` simplificada: slice vertical Fase 1 (GET + POST) / Fase 1b (UI).
 - Contrato API unificado en `specs/api-contract.md` (`GET /api/experiences`, `POST /api/requests`); `api-requests-contract.md` → redirect.
