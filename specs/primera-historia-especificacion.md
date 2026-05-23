@@ -2,7 +2,7 @@
 
 
 
-**Estado:** slice GET **hecho** (2026-05-23); slice POST en [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md).  
+**Estado:** slices GET y reserva **hechos** (2026-05-23). Detalle reserva: [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md).  
 
 **Contrato HTTP:** [`api-contract.md`](api-contract.md). **Stack:** [`techstack.md`](techstack.md).
 
@@ -112,21 +112,23 @@ Validación y `POST /api/requests`: ver [`slice-post-reserva-experiencia.md`](sl
 
 ## Criterios de hecho — slice 1 (GET)
 
-
-
 - [x] `GET /api/experiences` devuelve **exactamente** las dos experiencias con `id`, `title` y `description` en inglés.
-
 - [x] `POST` en `/api/experiences` → `405`.
-
 - [x] Tests de catálogo y MockMvc en verde.
-
 - [x] Ids de experiencia son **enteros** (`1`, `2`).
-
-
 
 ---
 
+## Criterios de hecho — slice 2 (reserva)
 
+Ver [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md) — **hecho**.
+
+- [x] `POST /api/requests` válido → `201` + `{ "ok": true }`.
+- [x] Payload inválido → `400` + `errors` en inglés.
+- [x] `GET /api/requests` → `405`.
+- [x] 18 tests en verde (GET + reserva). CI en GitHub Actions.
+
+---
 
 ## Historial
 
@@ -136,6 +138,7 @@ Validación y `POST /api/requests`: ver [`slice-post-reserva-experiencia.md`](sl
 
 |-------|--------|
 
+| 2026-05-23 | Slice reserva cerrada; merge PR #1 a `main`. |
 | 2026-05-23 | Slice GET cerrado; spec POST en archivo dedicado. |
 
 | 2026-05-23 | Slice reducido: solo GET catálogo; `nativeEnglishSpeaker` en `ExperienceRequest`. |

@@ -1,6 +1,6 @@
 # Segunda slice vertical — reserva de experiencia (`POST /api/requests`)
 
-**Estado:** acordado (2026-05-23).  
+**Estado:** hecho (2026-05-23).  
 **Historia de usuario:** continúa [`primera-historia-especificacion.md`](primera-historia-especificacion.md).  
 **Prerrequisito:** slice GET catálogo **hecho**.  
 **Referencias:** [`api-contract.md`](api-contract.md), [`techstack.md`](techstack.md), [`mission.md`](mission.md).
@@ -131,6 +131,7 @@ Sin tests de email ni de servicio de notificación.
 
 | Fecha | Notas |
 |-------|--------|
+| 2026-05-23 | Slice cerrada; merge a `main`. |
 | 2026-05-23 | Slice reducida: solo validación de reserva; email en slice aparte. |
 | 2026-05-23 | `comment` obligatorio; ids enteros; `503` y email aplazados. |
 | 2026-05-23 | Borrador inicial. |

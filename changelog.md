@@ -6,6 +6,8 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-05-23
 
+- **Sesión cerrada** (feedback anfitrión): refuerzo TDD y nueva-slice en `AGENTS.md`; bugfix experiencia errónea en `next-steps`.
+- **Sesión cerrada:** slice reserva entregada; PR #1 mergeado a `main`; CI GitHub Actions; siguiente slice email (1.4).
 - PASO 6 slice reserva: `ExperienceRequestValidator`, `POST /api/requests`; 18 tests verdes.
 - Slice POST simplificada: solo validación de reserva; tests sin email; notificación aplazada (roadmap 1.4).
 - Slice GET cerrado; rama `feature/slice-post-requests`; spec `slice-post-reserva-experiencia.md`.

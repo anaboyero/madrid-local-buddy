@@ -126,6 +126,8 @@ Este proyecto sigue TDD estricto: **Red → Green → Refactor**, alineado con l
   * Firmas vacias, clases esqueleto o stubs que **no satisfagan** los tests (p. ej. listas vacias, `UnsupportedOperationException`, endpoints sin mapear)
 * Tras escribir los tests, **ejecutar `mvn test` y comprobar que fallan** (rojo). Informar al anfitrión cuantos fallan y por que.
 * **No** pasar al PASO 6 ni “dejar ya hecho” el feature porque parezca rapido.
+* **Checklist antes de tocar `src/main/java` (feature nuevo):** ¿el anfitrión aprobó los tests (PASO 5)? Si no → **parar**; solo `src/test/java` y specs.
+* Si el anfitrión dice «tests primero», «PASO 4» o «quiero ver el rojo»: **cero** lógica de negocio en producción en ese turno (ni validadores, ni controladores con respuesta correcta). Esqueletos que **fallen** solo si hace falta compilar, y decirlo explícito.
 
 ### PASO 6 — implementacion
 
@@ -140,6 +142,22 @@ Este proyecto sigue TDD estricto: **Red → Green → Refactor**, alineado con l
 * MVP con calidad y mantenibilidad.
 
 Herramientas, lenguaje, frameworks y stack de tests: **`specs/techstack.md`** (fuente unica). No duplicar aqui.
+
+---------------------------------------------------------------------
+Nueva slice / nueva rama
+---------------------------------------------------------------------
+
+Al **empezar una slice vertical nueva** (nueva spec, rama distinta o alcance POST/email/UI separado):
+
+1. **Recordar al anfitrión** que conviene **nueva conversación o ventana de contexto** en Cursor si la sesión anterior fue larga (reduce arrastre de decisiones del slice previo).
+2. Leer `specs/next-steps.md` y la spec activa antes de codificar.
+3. Confirmar en una frase el **alcance incluido / excluido** de la slice antes del PASO 4.
+
+---------------------------------------------------------------------
+Feedback bidireccional
+---------------------------------------------------------------------
+
+El feedback con el anfitrión va en **las dos direcciones**. Si una petición contradice TDD, el contrato, el alcance acordado o te parece rara, **decirlo en el chat** con argumentos (sin ser borde). El anfitrión tiene la ultima palabra, pero el debate es parte del trabajo.
 
 ---------------------------------------------------------------------
 
