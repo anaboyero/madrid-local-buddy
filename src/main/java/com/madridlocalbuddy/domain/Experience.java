@@ -1,4 +1,4 @@
 package com.madridlocalbuddy.domain;
 
-public record Experience(String id, String title, String description) {
+public record Experience(int id, String title, String description) {
 }

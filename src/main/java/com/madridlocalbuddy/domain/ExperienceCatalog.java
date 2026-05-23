@@ -7,11 +7,11 @@ public class ExperienceCatalog {
 
     private static final List<Experience> EXPERIENCES = List.of(
             new Experience(
-                    "cinema",
+                    1,
                     "Cinema",
                     "An evening at a local cinema — film and conversation in English."),
             new Experience(
-                    "casa-de-campo-walk",
+                    2,
                     "Casa de Campo walk",
                     "A relaxed walk in Casa de Campo — green Madrid away from the tourist centre."));
 
@@ -19,9 +19,9 @@ public class ExperienceCatalog {
         return EXPERIENCES;
     }
 
-    public Optional<Experience> findById(String id) {
+    public Optional<Experience> findById(int id) {
         return EXPERIENCES.stream()
-                .filter(experience -> experience.id().equals(id))
+                .filter(experience -> experience.id() == id)
                 .findFirst();
     }
 }
