@@ -1,25 +1,23 @@
 # Próxima sesión
 
-**Última sesión cerrada:** 2026-05-24.
+**Última sesión cerrada:** 2026-05-24 (slice 1.5).
 
 ## Acuerdos y estado
 
-- **Slice GET (1.2)** y **reserva (1.3):** hechas en `main`.
-- **Slice notificación (1.4):** **hecha** — merge **PR #2** a `main`; 21 tests verdes.
-- **Diseño 1.4:** `HostNotifier` → `EmailHostNotifier` → `LogEmailSender`; payload/dominio (`Visitor`, mapper); `503` si falla notificación.
-- **Bug “experiencia errónea”:** descartado (fallo manual).
+- **Slices 1.2–1.5:** hechas; slice **1.5** commiteada en `main` (email HTTP Resend, composite log+envío, 36 tests).
+- **Smoke 1.5:** **hecho** — envío real verificado por el anfitrión.
+- **Formato specs:** tres documentos por slice (`requirements` / `plan` / `validation`) desde 1.5; ver `AGENTS.md`.
+- **Email:** log siempre; envío real con `EMAIL_SENDER_MODE=http`.
 
 ## Próximo trabajo acordado (orden)
 
-1. **Slice 1.5** — email real vía **Resend** (`HttpEmailSender`, `EMAIL_SENDER_MODE=log|http`).
-2. **Destinatario pruebas:** `boyeromail@gmail.com` (`HOST_NOTIFICATION_EMAIL`).
-3. **Remitente:** sandbox Resend (`onboarding@resend.dev` o similar) hasta dominio verificado — no `@gmail.com` como From.
-4. Después **1.6** (JAR documentado); luego Fase 1b / más producto.
+1. **Slice 1.6** — JAR local documentado (`java -jar`).
+2. Fase 1b / más producto (cuando toque).
 
 ## Siguiente PASO
 
-**PASO 1** — debate y spec slice **1.5** (Resend HTTP). Nueva conversación recomendada.
+**PASO 1** — debate y spec slice **1.6** (JAR). Nueva conversación recomendada.
 
 ## Frase para retomar
 
-> 1.4 en `main`. Siguiente: spec Resend (1.5), destino `boyeromail@gmail.com`, luego JAR.
+> 1.5 hecha y smoke OK. Siguiente: spec JAR (1.6).

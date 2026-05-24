@@ -83,11 +83,11 @@ No usar Vitest ni RTL en Fase 1 (ver `AGENTS.md`).
 |----------|--------|--------|
 | Patrón | **Puerto** `EmailSender` en infraestructura; usado por `EmailHostNotifier`; dominio sin SDK de terceros | acordado |
 | Tests | Implementación **mock** / fake que no envía correo real | acordado |
-| Desarrollo local | Implementación **log** (escribe el cuerpo del mail en logs) si no hay API key | acordado |
-| Producción | Implementación **HTTP REST** genérica (URL + API key por variables de entorno) | acordado |
-| Proveedor concreto | **TBD** — no fijar SDK de vendor en el núcleo | TBD |
-
-**Recomendación inicial (cuando se implemente el paso 1.5):** [Resend](https://resend.com) vía API REST (un `RestTemplate` o `WebClient`, JSON simple, free tier suficiente para el MVP). Sustituible por SendGrid/Postmark cambiando solo el adaptador y la configuración.
+| Log | **Siempre** — cada notificación se escribe en log (`LogEmailSender` vía `CompositeEmailSender`) | acordado (1.5) |
+| Desarrollo local | `EMAIL_SENDER_MODE=log` (default): log + **sin** envío HTTP | acordado |
+| Producción / prueba real | `EMAIL_SENDER_MODE=http`: log + **HTTP REST** (Resend) | acordado |
+| Proveedor concreto (1.5) | **[Resend](https://resend.com)** vía `HttpEmailSender` + `RestClient` (sin SDK) | hecho |
+| Composición | `CompositeEmailSender`: `LogEmailSender` siempre + `NoOpEmailSender` o `HttpEmailSender` | hecho (1.5) |
 
 ### Variables de entorno (documentadas; no commitear valores)
 
@@ -97,7 +97,7 @@ No usar Vitest ni RTL en Fase 1 (ver `AGENTS.md`).
 | `EMAIL_FROM` | Sí (envío real) | Remitente verificado en el proveedor |
 | `EMAIL_API_KEY` | Sí (envío real) | Clave del proveedor |
 | `EMAIL_API_URL` | No | Por defecto URL de Resend; override para otro proveedor |
-| `EMAIL_SENDER_MODE` | No | `log` \| `http` — default `log` en local |
+| `EMAIL_SENDER_MODE` | No | `log` (solo log) \| `http` (log + envío real) — default `log` |
 
 ---
 
@@ -137,3 +137,4 @@ La UI pública será **100 % en inglés** (ver `mission.md`).
 |-------|--------|
 | 2026-05-22 | Acuerdo: Java, Spring Boot 3, Maven, API-first, POST /api/requests, JUnit/MockMvc, email por puerto + REST TBD (Resend recomendado), deploy JAR local, UI aplazada. |
 | 2026-05-24 | Capa `HostNotifier` sobre `EmailSender`; payload HTTP vs dominio; record `Visitor`. |
+| 2026-05-24 | Slice 1.5: Resend HTTP, composite log+envío, fail-fast, `EMAIL_SENDER_MODE=log\|http`. |

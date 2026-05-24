@@ -104,6 +104,8 @@ Contrato: comunicar al anfitrión que hay una reserva válida. Canal agnóstico 
 
 Delega el envío en `EmailSender`.
 
+> **Formato vigente (slice 1.5):** asunto y cuerpo actualizados en [`slices/1.5-resend-email/requirements.md`](slices/1.5-resend-email/requirements.md) — asunto `You got a new experience request: {title}`; cuerpo con experiencia (título + descripción), visitante y comment. Lo implementado en 1.4 usaba otro asunto hasta aplicar 1.5.
+
 ### Puerto `EmailSender` (infraestructura)
 
 Transporte de email desacoplado del proveedor:

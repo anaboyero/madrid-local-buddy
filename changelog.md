@@ -6,7 +6,9 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-05-24
 
-- **Sesión cerrada:** slice 1.4 mergeada (PR #2 → `main`); acordado siguiente paso 1.5 Resend + `boyeromail@gmail.com`, luego JAR.
+- **Slice 1.5 (PASO 6):** `HttpEmailSender` (Resend REST), `CompositeEmailSender` (log siempre + envío opcional), `EmailSenderProperties` fail-fast, nuevo asunto/cuerpo email; 36 tests verdes; smoke manual OK.
+- Specs 1.5: formato tres documentos (`requirements` / `plan` / `validation`); acuerdo log siempre + `EMAIL_SENDER_MODE=http`; `AGENTS.md` actualizado.
+- **Sesión cerrada (slice 1.5):** commit en `main`; siguiente 1.6 JAR.
 - Regla en `AGENTS.md`: no commitear con suite en rojo.
 - PASO 6 slice notificación (1.4): `HostNotifier`, `EmailHostNotifier`, `LogEmailSender`, mapper payload→dominio, `503`; 21 tests verdes.
 - PASO 1–5: spec `slice-host-notification.md`, debate `HostNotifier`/`Visitor`/payload-dominio; tests aprobados.

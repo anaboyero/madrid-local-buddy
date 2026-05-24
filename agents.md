@@ -13,13 +13,37 @@ Eres un agente al que le gusta interactuar conmigo. Siempre estas dispuesto a bu
 En este momento estamos trabajando en este proyecto: "madrid local buddy"
 
 *** Decisiones de producto: ***
-Leer `specs/mission.md` y, para la historia activa, `specs/primera-historia-especificacion.md`.
+Leer `specs/mission.md` y `specs/primera-historia-especificacion.md`.
+
+*** Slice activa (desde 1.5): ***
+Carpeta `specs/slices/<id>-<nombre>/` con tres documentos (ver sección **Specs de slice** más abajo). Empezar por `requirements.md`; no pasar al plan ni a tests sin cierre del documento anterior.
 
 *** Decisiones técnicas: ***
 Leer `specs/techstack.md` y `specs/api-contract.md`.
 
-*** Plan: ***
+*** Plan global: ***
 Leer `specs/roadmap.md`.
+
+*** Specs legacy (slices 1.2–1.4): ***
+Archivos monolíticos en `specs/` (`slice-*.md`). No migrar salvo acuerdo; el formato de tres documentos aplica **desde la slice 1.5**.
+
+---------------------------------------------------------------------
+# Specs de slice (requirements · plan · validation)
+---------------------------------------------------------------------
+
+Cada slice vertical vive en **`specs/slices/<id>-<nombre>/`** (ej. `specs/slices/1.5-resend-email/`).
+
+| Documento | Contenido | Cuándo |
+|-----------|-----------|--------|
+| **`requirements.md`** | Qué y por qué: historia, alcance in/out, comportamiento observable (HTTP, errores, reglas de negocio). **Sin** nombres de clases Java ni detalle de implementación. | PASO 1 — debate y cierre |
+| **`plan.md`** | Cómo: piezas técnicas, puertos, adaptadores, config, dependencias, orden de construcción. Referencia `requirements.md`; no repite la historia. | PASO 2–3 |
+| **`validation.md`** | Cómo comprobarlo: escenarios Given/When/Then, casos borde, smoke manual, criterio de «hecho». Fuente de verdad para tests (PASO 4–5). | Borrador en PASO 3; cerrado antes de PASO 4 |
+
+**Orden de aprobación:** `requirements.md` → `plan.md` → `validation.md` → PASO 4 (tests).
+
+**Frontera con contrato global:** [`specs/api-contract.md`](specs/api-contract.md) es la verdad estable de la API. Los requirements de slice describen qué **usa o añade** este slice, sin duplicar todo el contrato.
+
+**Slices pequeñas:** los tres documentos siguen existiendo; cada uno puede ser breve (p. ej. JAR en 1.6).
 
 ---------------------------------------------------------------------
 # Flujo de trabajo durante la sesion
@@ -75,15 +99,15 @@ Anade una entrada con fecha y los pasos o hitos dados durante la sesion (constit
 
 *** Flujo ***
 
-PASO 1. Planteamos un debate conjunto sobre las especificaciones.
+PASO 1. Planteamos un debate conjunto sobre las especificaciones → **`requirements.md`** de la slice activa.
 
 PASO 2. Pensamos en conjunto en diseno generico del MVP.
 
-PASO 3. Planeamos la primera historia con formato slice vertical (el orden de construccion sigue el roadmap; hoy API antes que UI).
+PASO 3. Planeamos la slice vertical → **`plan.md`** (+ borrador de **`validation.md`**). El orden de construccion sigue el roadmap; hoy API antes que UI.
 
-PASO 4. **Solo tests** (fase **roja**). Ver reglas TDD abajo: sin implementar el comportamiento en `src/main/java`.
+PASO 4. **Solo tests** (fase **roja**), alineados con **`validation.md`** y el contrato API. Ver reglas TDD abajo: sin implementar el comportamiento en `src/main/java`.
 
-PASO 5. El anfitrión revisa y aprueba los tests (siguen en **rojo**).
+PASO 5. El anfitrión revisa y aprueba los tests (siguen en **rojo**) frente a `validation.md`.
 
 PASO 6. **Solo entonces** implementas el codigo de produccion minimo para que los tests pasen (fase **verde**).
 
@@ -120,7 +144,7 @@ Este proyecto sigue TDD estricto: **Red → Green → Refactor**, alineado con l
 
 ### PASO 4 — solo tests (reglas obligatorias)
 
-* Escribir tests en `src/test/java` que reflejen el contrato (`specs/api-contract.md`) y la historia activa.
+* Escribir tests en `src/test/java` que reflejen `validation.md` de la slice activa y `specs/api-contract.md`.
 * **Prohibido** en PASO 4 implementar logica de negocio ni endpoints que hagan pasar esos tests (catalogo, validacion, controladores con respuesta correcta, email, etc.).
 * **Permitido** solo el andamiaje minimo para compilar y ejecutar la suite, si hace falta:
   * `pom.xml`, dependencias acordadas, `.gitignore`
@@ -153,8 +177,8 @@ Nueva slice / nueva rama
 Al **empezar una slice vertical nueva** (nueva spec, rama distinta o alcance POST/email/UI separado):
 
 1. **Recordar al anfitrión** que conviene **nueva conversación o ventana de contexto** en Cursor si la sesión anterior fue larga (reduce arrastre de decisiones del slice previo).
-2. Leer `specs/next-steps.md` y la spec activa antes de codificar.
-3. Confirmar en una frase el **alcance incluido / excluido** de la slice antes del PASO 4.
+2. Leer `specs/next-steps.md` y la carpeta de la slice activa (`requirements.md` como mínimo) antes de codificar.
+3. Confirmar en una frase el **alcance incluido / excluido** de la slice (desde `requirements.md`) antes del PASO 4.
 
 ---------------------------------------------------------------------
 Feedback bidireccional
