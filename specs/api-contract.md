@@ -1,7 +1,7 @@
 # API contract — Madrid Local Buddy (Fase 1)
 
 **Estado:** acordado (2026-05-23).  
-**Alcance actual:** `GET /api/experiences` y `POST /api/requests` (reserva, sin email). Notificación: roadmap 1.4.
+**Alcance actual:** `GET /api/experiences` y `POST /api/requests` (reserva + notificación al anfitrión). Detalle notificación: [`slice-host-notification.md`](slice-host-notification.md).
 
 ---
 
@@ -55,9 +55,10 @@ curl -s http://localhost:8080/api/experiences
 
 ## `POST /api/requests` (reserva — acordado)
 
-Acepta o rechaza una **reserva** según validez del payload. **Sin envío de email** en este slice (ver roadmap 1.4).
+Acepta o rechaza una **reserva** según validez del payload. Si es válida, **notifica al anfitrión** (email en slice 1.4).
 
-Detalle: [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md).
+Detalle validación: [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md).  
+Detalle notificación: [`slice-host-notification.md`](slice-host-notification.md).
 
 ### Request
 
@@ -74,11 +75,10 @@ Detalle: [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md
 
 | Código | Cuándo | Cuerpo |
 |--------|--------|--------|
-| `201` | Reserva válida | `{ "ok": true }` |
-| `400` | Datos inválidos | `{ "ok": false, "errors": [...] }` |
+| `201` | Reserva válida y notificación enviada | `{ "ok": true }` |
+| `400` | Datos inválidos (no se notifica) | `{ "ok": false, "errors": [...] }` |
+| `503` | Reserva válida pero fallo al notificar al anfitrión | `{ "ok": false, "message": "Unable to notify host" }` |
 | `405` | Método no `POST` | — |
-
-Email al anfitrión: **aplazado** (slice posterior).
 
 ---
 
@@ -90,3 +90,4 @@ Email al anfitrión: **aplazado** (slice posterior).
 | 2026-05-23 | Añadido `GET /api/experiences`. |
 | 2026-05-23 | Slice actual = solo GET; POST aplazado; `nativeEnglishSpeaker` sustituye `yearsInMadrid`. |
 | 2026-05-23 | `id` de experiencias y `experienceId` pasan de string a integer (`1` = cinema, `2` = casa de campo). |
+| 2026-05-24 | `POST /api/requests`: notificación al anfitrión; respuesta `503` si falla el envío. |

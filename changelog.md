@@ -4,6 +4,11 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ---
 
+## 2026-05-24
+
+- PASO 1 slice notificación (1.4): spec `slice-host-notification.md` — `HostNotifier`, `EmailHostNotifier`, payload/dominio, `Visitor`, `503`.
+- Contrato API y `techstack.md` actualizados; rama acordada `feature/slice-host-notification`.
+
 ## 2026-05-23
 
 - **Sesión cerrada** (feedback anfitrión): refuerzo TDD y nueva-slice en `AGENTS.md`; bugfix experiencia errónea en `next-steps`.
