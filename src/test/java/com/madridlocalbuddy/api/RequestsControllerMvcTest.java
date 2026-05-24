@@ -1,13 +1,20 @@
 package com.madridlocalbuddy.api;
 
+import com.madridlocalbuddy.application.HostNotificationException;
+import com.madridlocalbuddy.application.HostNotifier;
+import com.madridlocalbuddy.domain.ExperienceRequest;
 import com.madridlocalbuddy.support.ContractRequests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -20,6 +27,9 @@ class RequestsControllerMvcTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private HostNotifier hostNotifier;
+
     @Test
     void postRequests_withValidPayload_returns201AndOkTrue() throws Exception {
         mockMvc.perform(post("/api/requests")
@@ -27,6 +37,22 @@ class RequestsControllerMvcTest {
                         .content(ContractRequests.VALID_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.ok").value(true));
+
+        verify(hostNotifier).notify(any(ExperienceRequest.class));
+    }
+
+    @Test
+    void postRequests_whenNotificationFails_returns503WithMessage() throws Exception {
+        doThrow(new HostNotificationException("Unable to notify host"))
+                .when(hostNotifier)
+                .notify(any(ExperienceRequest.class));
+
+        mockMvc.perform(post("/api/requests")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(ContractRequests.VALID_JSON))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(jsonPath("$.ok").value(false))
+                .andExpect(jsonPath("$.message").value("Unable to notify host"));
     }
 
     @Test

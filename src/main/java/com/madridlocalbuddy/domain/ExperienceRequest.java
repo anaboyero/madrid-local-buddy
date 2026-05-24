@@ -1,8 +1,4 @@
 package com.madridlocalbuddy.domain;
 
-public record ExperienceRequest(
-        int experienceId,
-        String visitorEmail,
-        String comment,
-        boolean nativeEnglishSpeaker) {
+public record ExperienceRequest(Experience experience, Visitor visitor, String comment) {
 }

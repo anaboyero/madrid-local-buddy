@@ -14,4 +14,7 @@ final class RequestResponse {
 
     record Failure(boolean ok, List<ValidationError> errors) {
     }
+
+    record ServiceUnavailable(boolean ok, String message) {
+    }
 }

@@ -36,8 +36,10 @@ Los principios de ingeniería (TDD, capas, calidad) están en `AGENTS.md`. Este 
 
 ```text
 src/main/java/.../
-  domain/           # catálogo, ExperienceRequest (futuro POST)
-  api/              # controlador REST GET /api/experiences
+  domain/           # catálogo, ExperienceRequest (dominio), Visitor, validador
+  application/      # HostNotifier, EmailHostNotifier, mapper
+  api/              # controladores REST; ExperienceRequestPayload (JSON)
+  infrastructure/   # EmailSender (log/fake; HTTP en 1.5)
 src/test/java/.../  # espejo para tests
 ```
 
@@ -46,7 +48,7 @@ src/test/java/.../  # espejo para tests
 | Herramienta | Uso |
 |-------------|-----|
 | **JUnit 5** | Tests unitarios (dominio, aplicación) |
-| **Mockito** | Mocks del puerto `EmailSender` cuando aplique |
+| **Mockito** | Mocks de `HostNotifier`, `EmailSender` y puertos de infra |
 | **Spring Boot Test + MockMvc** | Tests de integración del endpoint |
 | **AssertJ** (opcional) | Aserciones legibles — añadir solo si se acuerda al crear el proyecto |
 
@@ -65,11 +67,21 @@ No usar Vitest ni RTL en Fase 1 (ver `AGENTS.md`).
 
 ---
 
-## Email (opción B — sin acoplar proveedor en el dominio)
+## Notificación al anfitrión (slice 1.4)
+
+| Decisión | Valor |
+|----------|--------|
+| Puerto canal-agnóstico | **`HostNotifier`** — recibe `ExperienceRequest` de dominio (enriquecido) |
+| Implementación 1.4 | **`EmailHostNotifier`** — único canal en este slice |
+| Entrada HTTP | **`ExperienceRequestPayload`** (JSON plano) + **`ExperienceRequestMapper`** tras validación |
+| Visitante | Record **`Visitor`** (`email`, `nativeEnglishSpeaker`) |
+| Canales futuros | Otras impl. de `HostNotifier` (WhatsApp, etc.) — fuera de 1.4 |
+
+## Email — transporte (opción B — sin acoplar proveedor en el dominio)
 
 | Decisión | Valor | Estado |
 |----------|--------|--------|
-| Patrón | **Puerto** `EmailSender` en infraestructura; dominio sin SDK de terceros | acordado |
+| Patrón | **Puerto** `EmailSender` en infraestructura; usado por `EmailHostNotifier`; dominio sin SDK de terceros | acordado |
 | Tests | Implementación **mock** / fake que no envía correo real | acordado |
 | Desarrollo local | Implementación **log** (escribe el cuerpo del mail en logs) si no hay API key | acordado |
 | Producción | Implementación **HTTP REST** genérica (URL + API key por variables de entorno) | acordado |
@@ -124,3 +136,4 @@ La UI pública será **100 % en inglés** (ver `mission.md`).
 | Fecha | Cambio |
 |-------|--------|
 | 2026-05-22 | Acuerdo: Java, Spring Boot 3, Maven, API-first, POST /api/requests, JUnit/MockMvc, email por puerto + REST TBD (Resend recomendado), deploy JAR local, UI aplazada. |
+| 2026-05-24 | Capa `HostNotifier` sobre `EmailSender`; payload HTTP vs dominio; record `Visitor`. |
