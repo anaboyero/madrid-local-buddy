@@ -1,7 +1,6 @@
 package com.madridlocalbuddy.api;
 
 import com.madridlocalbuddy.domain.ExperienceCatalog;
-import com.madridlocalbuddy.domain.ExperienceRequest;
 import com.madridlocalbuddy.domain.ExperienceRequestValidator;
 import com.madridlocalbuddy.domain.ValidationError;
 import org.springframework.http.HttpStatus;
@@ -26,8 +25,8 @@ public class RequestsController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRequest(@RequestBody ExperienceRequest request) {
-        List<ValidationError> errors = validator.validate(request, catalog);
+    public ResponseEntity<?> createRequest(@RequestBody ExperienceRequestPayload payload) {
+        List<ValidationError> errors = validator.validate(payload, catalog);
         if (!errors.isEmpty()) {
             return ResponseEntity.badRequest().body(new RequestResponse.Failure(false, errors));
         }

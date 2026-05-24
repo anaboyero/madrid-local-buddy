@@ -21,8 +21,8 @@
 ## Dónde nos quedamos
 
 - Spec, contrato y techstack actualizados; código aún sin cambios (sigue en `main` limpio).
-- **Siguiente:** crear rama → **PASO 4** (solo tests, rojo).
+- **Siguiente:** **PASO 5** — revisión y aprobación de tests (rojo); luego PASO 6.
 
 ## Frase para retomar
 
-> Spec notificación acordada. Rama `feature/slice-host-notification`, PASO 4 (tests en rojo).
+> Tests en rojo (4 fallos: mapper, EmailHostNotifier, notify en controller, 503). Aprobar tests → PASO 6.
