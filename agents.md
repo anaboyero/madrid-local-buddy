@@ -39,6 +39,8 @@ Leer `specs/roadmap.md`.
 
 - Antes de commitear los cambios, quiero que actualices el changelog.md con los ultimos cambios actualizados.
 
+- **Nunca commitear con la suite en rojo:** ejecutar `mvn test` antes de cada commit; solo commitear si **todos** los tests pasan. En PASO 4 los tests nuevos fallan a propósito — no hacer commit del código de tests hasta PASO 6 (verde), salvo acuerdo explícito distinto. Specs/docs sin tests pueden commitearse aparte si no rompen la suite.
+
 
 ## Al terminar la sesion 
 
@@ -125,6 +127,7 @@ Este proyecto sigue TDD estricto: **Red → Green → Refactor**, alineado con l
   * Clase `@SpringBootApplication`
   * Firmas vacias, clases esqueleto o stubs que **no satisfagan** los tests (p. ej. listas vacias, `UnsupportedOperationException`, endpoints sin mapear)
 * Tras escribir los tests, **ejecutar `mvn test` y comprobar que fallan** (rojo). Informar al anfitrión cuantos fallan y por que.
+* **No commitear** mientras la suite esté en rojo (regla general en “Durante la sesion”). Dejar tests + stubs en working tree para revision PASO 5; commit tras PASO 6 en verde.
 * **No** pasar al PASO 6 ni “dejar ya hecho” el feature porque parezca rapido.
 * **Checklist antes de tocar `src/main/java` (feature nuevo):** ¿el anfitrión aprobó los tests (PASO 5)? Si no → **parar**; solo `src/test/java` y specs.
 * Si el anfitrión dice «tests primero», «PASO 4» o «quiero ver el rojo»: **cero** lógica de negocio en producción en ese turno (ni validadores, ni controladores con respuesta correcta). Esqueletos que **fallen** solo si hace falta compilar, y decirlo explícito.

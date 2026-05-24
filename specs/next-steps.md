@@ -1,28 +1,25 @@
 # Próxima sesión
 
-**Última sesión:** 2026-05-24 (en curso).
+**Última sesión cerrada:** 2026-05-24.
 
 ## Acuerdos y estado
 
-- **Slice reserva (`POST /api/requests`):** **cerrada** — validación, `201`/`400`/`405`, en `main`.
-- **Slice GET:** hecha.
-- **Slice notificación (1.4):** **implementada** en rama `feature/slice-host-notification` — 21 tests verdes.
-- **Ids de experiencia:** enteros (`1`, `2`); `comment` = preferencia de fecha/horario obligatoria.
-- **Bug “experiencia errónea”:** descartado (fallo manual del anfitrión); no bloquea.
+- **Slice GET (1.2)** y **reserva (1.3):** hechas en `main`.
+- **Slice notificación (1.4):** **hecha** — merge **PR #2** a `main`; 21 tests verdes.
+- **Diseño 1.4:** `HostNotifier` → `EmailHostNotifier` → `LogEmailSender`; payload/dominio (`Visitor`, mapper); `503` si falla notificación.
+- **Bug “experiencia errónea”:** descartado (fallo manual).
 
-## Diseño acordado (slice 1.4)
+## Próximo trabajo acordado (orden)
 
-- **`HostNotifier.notify(ExperienceRequest)`** — canal agnóstico.
-- **`EmailHostNotifier`** + **`EmailSender`** (log/fake en 1.4).
-- **Payload HTTP plano** (`ExperienceRequestPayload`) → validar → **mapper** → dominio (`Experience`, `Visitor`, `comment`).
-- **`503`** si falla notificación: `{ "ok": false, "message": "Unable to notify host" }`.
-- **Rama:** `feature/slice-host-notification`.
+1. **Slice 1.5** — email real vía **Resend** (`HttpEmailSender`, `EMAIL_SENDER_MODE=log|http`).
+2. **Destinatario pruebas:** `boyeromail@gmail.com` (`HOST_NOTIFICATION_EMAIL`).
+3. **Remitente:** sandbox Resend (`onboarding@resend.dev` o similar) hasta dominio verificado — no `@gmail.com` como From.
+4. Después **1.6** (JAR documentado); luego Fase 1b / más producto.
 
-## Dónde nos quedamos
+## Siguiente PASO
 
-- PASO 6 cerrado: `HostNotifier`, `EmailHostNotifier`, `LogEmailSender`, mapper, `503` en controller.
-- **Siguiente:** PR → merge a `main`; o slice **1.5** (adaptador email HTTP real).
+**PASO 1** — debate y spec slice **1.5** (Resend HTTP). Nueva conversación recomendada.
 
 ## Frase para retomar
 
-> Slice notificación en rama `feature/slice-host-notification`, 21 tests verdes. PR o paso 1.5.
+> 1.4 en `main`. Siguiente: spec Resend (1.5), destino `boyeromail@gmail.com`, luego JAR.
