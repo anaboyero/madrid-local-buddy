@@ -1,5 +1,8 @@
 package com.madridlocalbuddy.api;
 
+import com.madridlocalbuddy.application.ExperienceRequestMapper;
+import com.madridlocalbuddy.application.HostNotificationException;
+import com.madridlocalbuddy.application.HostNotifier;
 import com.madridlocalbuddy.domain.ExperienceCatalog;
 import com.madridlocalbuddy.domain.ExperienceRequestValidator;
 import com.madridlocalbuddy.domain.ValidationError;
@@ -18,10 +21,18 @@ public class RequestsController {
 
     private final ExperienceCatalog catalog;
     private final ExperienceRequestValidator validator;
+    private final ExperienceRequestMapper mapper;
+    private final HostNotifier hostNotifier;
 
-    public RequestsController(ExperienceCatalog catalog, ExperienceRequestValidator validator) {
+    public RequestsController(
+            ExperienceCatalog catalog,
+            ExperienceRequestValidator validator,
+            ExperienceRequestMapper mapper,
+            HostNotifier hostNotifier) {
         this.catalog = catalog;
         this.validator = validator;
+        this.mapper = mapper;
+        this.hostNotifier = hostNotifier;
     }
 
     @PostMapping
@@ -30,6 +41,14 @@ public class RequestsController {
         if (!errors.isEmpty()) {
             return ResponseEntity.badRequest().body(new RequestResponse.Failure(false, errors));
         }
+
+        try {
+            hostNotifier.notify(mapper.toDomain(payload, catalog));
+        } catch (HostNotificationException ex) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(new RequestResponse.ServiceUnavailable(false, "Unable to notify host"));
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(new RequestResponse.Success(true));
     }
 }

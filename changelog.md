@@ -6,8 +6,9 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-05-24
 
-- PASO 4 slice notificación: tests en rojo (4 fallos — mapper, EmailHostNotifier, HostNotifier en controller, 503); 21 tests total.
-- Commit docs PASO 1 en rama `feature/slice-host-notification`.
+- PASO 6 slice notificación (1.4): `HostNotifier`, `EmailHostNotifier`, `LogEmailSender`, mapper payload→dominio, `503`; 21 tests verdes.
+- PASO 4–5: tests aprobados (mapper, notifier, MockMvc notify/503).
+- Spec `slice-host-notification.md` y docs; rama `feature/slice-host-notification`.
 
 ## 2026-05-23
 

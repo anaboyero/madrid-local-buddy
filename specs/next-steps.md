@@ -6,7 +6,7 @@
 
 - **Slice reserva (`POST /api/requests`):** **cerrada** — validación, `201`/`400`/`405`, en `main`.
 - **Slice GET:** hecha.
-- **Slice notificación (1.4):** **PASO 1 cerrado** — spec acordada [`slice-host-notification.md`](slice-host-notification.md).
+- **Slice notificación (1.4):** **implementada** en rama `feature/slice-host-notification` — 21 tests verdes.
 - **Ids de experiencia:** enteros (`1`, `2`); `comment` = preferencia de fecha/horario obligatoria.
 - **Bug “experiencia errónea”:** descartado (fallo manual del anfitrión); no bloquea.
 
@@ -20,9 +20,9 @@
 
 ## Dónde nos quedamos
 
-- Spec, contrato y techstack actualizados; código aún sin cambios (sigue en `main` limpio).
-- **Siguiente:** **PASO 5** — revisión y aprobación de tests (rojo); luego PASO 6.
+- PASO 6 cerrado: `HostNotifier`, `EmailHostNotifier`, `LogEmailSender`, mapper, `503` en controller.
+- **Siguiente:** PR → merge a `main`; o slice **1.5** (adaptador email HTTP real).
 
 ## Frase para retomar
 
-> Tests en rojo (4 fallos: mapper, EmailHostNotifier, notify en controller, 503). Aprobar tests → PASO 6.
+> Slice notificación en rama `feature/slice-host-notification`, 21 tests verdes. PR o paso 1.5.

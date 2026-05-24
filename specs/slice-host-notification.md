@@ -1,6 +1,6 @@
 # Tercera slice vertical — notificación al anfitrión (`POST /api/requests` + email)
 
-**Estado:** acordado (2026-05-24).  
+**Estado:** hecho (2026-05-24).  
 **Historia de usuario:** continúa [`primera-historia-especificacion.md`](primera-historia-especificacion.md).  
 **Prerrequisito:** slice reserva (`POST /api/requests`, validación) **hecha** en `main`.  
 **Referencias:** [`api-contract.md`](api-contract.md), [`techstack.md`](techstack.md), [`mission.md`](mission.md).  
@@ -232,14 +232,14 @@ Comportamiento acordado (TDD estricto — rojo antes de PASO 6):
 
 ## Criterios de hecho
 
-- [ ] Payload HTTP plano sin cambios de contrato; dominio enriquecido tras validación.
-- [ ] `Visitor` y mapper documentados e implementados.
-- [ ] `HostNotifier` + `EmailHostNotifier` + `EmailSender` (log) en verde.
-- [ ] `POST` válido + notificación OK → `201`.
-- [ ] `POST` válido + fallo notificación → `503` + `{ "ok": false, "message": "Unable to notify host" }`.
-- [ ] `POST` inválido → `400`; no se invoca notificación.
-- [ ] Tests en verde; CI pasa.
-- [ ] Contrato actualizado en [`api-contract.md`](api-contract.md).
+- [x] Payload HTTP plano sin cambios de contrato; dominio enriquecido tras validación.
+- [x] `Visitor` y mapper documentados e implementados.
+- [x] `HostNotifier` + `EmailHostNotifier` + `EmailSender` (log) en verde.
+- [x] `POST` válido + notificación OK → `201`.
+- [x] `POST` válido + fallo notificación → `503` + `{ "ok": false, "message": "Unable to notify host" }`.
+- [x] `POST` inválido → `400`; no se invoca notificación.
+- [x] Tests en verde; CI pendiente de PR.
+- [x] Contrato actualizado en [`api-contract.md`](api-contract.md).
 
 ---
 
