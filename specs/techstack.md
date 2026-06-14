@@ -29,7 +29,7 @@ Los principios de ingeniería (TDD, capas, calidad) están en `AGENTS.md`. Este 
 | Build | **Maven** | acordado |
 | Estilo API | REST JSON | acordado |
 | Persistencia Fase 1 | **Ninguna** (sin BD) | acordado |
-| Deploy Fase 1 | **JAR local** (`java -jar`) | acordado |
+| Deploy Fase 1 | **JAR local** (`java -jar`) — ver [`readme.md`](../readme.md#running-locally-jar) | acordado |
 | Cloud / contenedores | Fuera de Fase 1 | aplazado |
 
 ### Estructura de paquetes (orientativa)
@@ -138,3 +138,4 @@ La UI pública será **100 % en inglés** (ver `mission.md`).
 | 2026-05-22 | Acuerdo: Java, Spring Boot 3, Maven, API-first, POST /api/requests, JUnit/MockMvc, email por puerto + REST TBD (Resend recomendado), deploy JAR local, UI aplazada. |
 | 2026-05-24 | Capa `HostNotifier` sobre `EmailSender`; payload HTTP vs dominio; record `Visitor`. |
 | 2026-05-24 | Slice 1.5: Resend HTTP, composite log+envío, fail-fast, `EMAIL_SENDER_MODE=log\|http`. |
+| 2026-06-14 | Slice 1.6: README «Running locally (JAR)», `.env.example`, enlace en `techstack.md`; smoke M-01–M-03 OK. |
