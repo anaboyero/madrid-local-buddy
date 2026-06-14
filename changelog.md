@@ -4,6 +4,11 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ---
 
+## 2026-06-14
+
+- **Slice 1.6 (PASO 6):** `.env.example`, sección «Running locally (JAR)» en README, enlace en `techstack.md`; smoke manual M-01–M-03; Fase 1 API completa (1.2–1.6).
+- Specs 1.6: `requirements`, `plan`, `validation` en `specs/slices/1.6-jar-local/`.
+
 ## 2026-05-24
 
 - **Slice 1.5 (PASO 6):** `HttpEmailSender` (Resend REST), `CompositeEmailSender` (log siempre + envío opcional), `EmailSenderProperties` fail-fast, nuevo asunto/cuerpo email; 36 tests verdes; smoke manual OK.

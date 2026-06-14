@@ -29,7 +29,7 @@ La UI y criterios de pantalla quedan en **Fase 1b**.
 | 1.3 | Reserva: validar `ExperienceRequest` + `POST /api/requests` (`201`/`400`) | hecho |
 | 1.4 | Notificación email al anfitrión (`HostNotifier`, `EmailHostNotifier`, `503` si falla) | hecho — [`slice-host-notification.md`](slice-host-notification.md) |
 | 1.5 | Adaptador de email real (HTTP REST; Resend) | hecho — [`slices/1.5-resend-email/`](slices/1.5-resend-email/) |
-| 1.6 | Ejecutable JAR local documentado (`java -jar`) | acordado |
+| 1.6 | Ejecutable JAR local documentado (`java -jar`) | hecho — [`slices/1.6-jar-local/`](slices/1.6-jar-local/) |
 
 **Criterio de éxito slice GET (1.2):** hecho. **Slice reserva (1.3):** [`slice-post-reserva-experiencia.md`](slice-post-reserva-experiencia.md). Email: paso 1.4.
 
@@ -67,3 +67,4 @@ Detalle según `readme.md` y prioridad del anfitrión cuando Fase 1 esté hecha.
 | 2026-05-23 | Slice reserva (solo validación); email aplazado a 1.4. |
 | 2026-05-23 | Slice GET cerrado; rama `feature/slice-post-requests`. |
 | 2026-05-24 | Spec slice notificación (1.4): `HostNotifier`, payload/dominio, `Visitor`; rama `feature/slice-host-notification`. |
+| 2026-06-14 | Slice 1.6 hecho: JAR documentado en README, `.env.example`, smoke manual OK. |
