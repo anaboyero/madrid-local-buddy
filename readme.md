@@ -90,6 +90,16 @@ curl http://localhost:8080/api/experiences
 
 Expected: HTTP **200** and a JSON array with **2** experiences (including `"Cinema"`).
 
+### Data storage
+
+Valid requests are stored in a local **H2** database under `./data/` (created on first run; ignored by git). Data survives JAR restarts.
+
+List stored requests:
+
+```bash
+curl -s http://localhost:8080/api/requests
+```
+
 ---
 
 ## 📂 Project Structure

@@ -4,6 +4,12 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ---
 
+## 2026-06-24
+
+- **Slice 2.1 (PASO 6):** persistencia H2 file (`./data/`), `RequestRepository` + JPA, `GET /api/requests`, `201` con `id`; guardado antes de notificar (`503` no pierde datos); 40 tests verdes; smoke manual M-01/M-02 OK.
+- Specs 2.1: `requirements`, `plan`, `validation` en `specs/slices/2.1-persist-requests/`; contrato y `techstack` actualizados.
+- Fase 1b (UI) aplazada; slice 1.7 CI JAR descartada por ahora.
+
 ## 2026-06-14
 
 - **Slice 1.6 (PASO 6):** `.env.example`, sección «Running locally (JAR)» en README, enlace en `techstack.md`; smoke manual M-01–M-03; Fase 1 API completa (1.2–1.6).

@@ -9,7 +9,7 @@ final class RequestResponse {
     private RequestResponse() {
     }
 
-    record Success(boolean ok) {
+    record Success(boolean ok, long id) {
     }
 
     record Failure(boolean ok, List<ValidationError> errors) {

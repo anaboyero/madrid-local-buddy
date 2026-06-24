@@ -29,6 +29,7 @@ Los principios de ingeniería (TDD, capas, calidad) están en `AGENTS.md`. Este 
 | Build | **Maven** | acordado |
 | Estilo API | REST JSON | acordado |
 | Persistencia Fase 1 | **Ninguna** (sin BD) | acordado |
+| Persistencia Fase 2+ | **H2** file-based (`./data/`) — slice 2.1 | hecho |
 | Deploy Fase 1 | **JAR local** (`java -jar`) — ver [`readme.md`](../readme.md#running-locally-jar) | acordado |
 | Cloud / contenedores | Fuera de Fase 1 | aplazado |
 
@@ -39,7 +40,7 @@ src/main/java/.../
   domain/           # catálogo, ExperienceRequest (dominio), Visitor, validador
   application/      # HostNotifier, EmailHostNotifier, mapper
   api/              # controladores REST; ExperienceRequestPayload (JSON)
-  infrastructure/   # EmailSender (log/fake; HTTP en 1.5)
+  infrastructure/   # EmailSender, JPA (slice 2.1)
 src/test/java/.../  # espejo para tests
 ```
 
@@ -139,3 +140,4 @@ La UI pública será **100 % en inglés** (ver `mission.md`).
 | 2026-05-24 | Capa `HostNotifier` sobre `EmailSender`; payload HTTP vs dominio; record `Visitor`. |
 | 2026-05-24 | Slice 1.5: Resend HTTP, composite log+envío, fail-fast, `EMAIL_SENDER_MODE=log\|http`. |
 | 2026-06-14 | Slice 1.6: README «Running locally (JAR)», `.env.example`, enlace en `techstack.md`; smoke M-01–M-03 OK. |
+| 2026-06-24 | Slice 2.1: H2 file `./data/`, Spring Data JPA, `GET /api/requests`. |
