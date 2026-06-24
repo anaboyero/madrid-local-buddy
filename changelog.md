@@ -6,9 +6,11 @@ Avances del proyecto (hitos acordados o entregados). Actualizar al cerrar cada s
 
 ## 2026-06-24
 
+- **Sesión cerrada:** retoma tras pausa; dirección 1.7 CI → 2.1 persistencia; TDD completo (PASO 1–6); tests con objetos completos (PASO 5); smoke JAR manual OK; commit + PR [#4](https://github.com/anaboyero/madrid-local-buddy/pull/4) **mergeada** a `main`.
 - **Slice 2.1 (PASO 6):** persistencia H2 file (`./data/`), `RequestRepository` + JPA, `GET /api/requests`, `201` con `id`; guardado antes de notificar (`503` no pierde datos); 40 tests verdes; smoke manual M-01/M-02 OK.
 - Specs 2.1: `requirements`, `plan`, `validation` en `specs/slices/2.1-persist-requests/`; contrato y `techstack` actualizados.
-- Fase 1b (UI) aplazada; slice 1.7 CI JAR descartada por ahora.
+- Fase 1b (UI) aplazada; slice 1.7 CI JAR y `Dockerfile` aplazados.
+- Herramientas: GitHub CLI instalado (`winget`); `gh auth login` para futuras PRs.
 
 ## 2026-06-14
 
