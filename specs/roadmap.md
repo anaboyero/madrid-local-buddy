@@ -48,8 +48,11 @@ La UI y criterios de pantalla quedan en **Fase 1b**.
 
 ## Fase 2+ (visión — sin orden cerrado)
 
+| Paso | Entregable | Estado |
+|------|------------|--------|
+| 2.1 | Persistencia solicitudes + `GET /api/requests` | hecho — [`slices/2.1-persist-requests/`](slices/2.1-persist-requests/) |
+
 - Más experiencias en catálogo  
-- Persistencia de solicitudes  
 - Dominio propio y mejor deliverability de email  
 - Calendario / disponibilidad  
 - Contenido dinámico / admin  
@@ -68,3 +71,4 @@ Detalle según `readme.md` y prioridad del anfitrión cuando Fase 1 esté hecha.
 | 2026-05-23 | Slice GET cerrado; rama `feature/slice-post-requests`. |
 | 2026-05-24 | Spec slice notificación (1.4): `HostNotifier`, payload/dominio, `Visitor`; rama `feature/slice-host-notification`. |
 | 2026-06-14 | Slice 1.6 hecho: JAR documentado en README, `.env.example`, smoke manual OK. |
+| 2026-06-24 | Slice 2.1 hecho: persistencia H2, `GET /api/requests`, `id` en `201`. |

@@ -1,7 +1,7 @@
 # API contract — Madrid Local Buddy (Fase 1)
 
-**Estado:** acordado (2026-05-23).  
-**Alcance actual:** `GET /api/experiences` y `POST /api/requests` (reserva + notificación al anfitrión). Detalle notificación: [`slice-host-notification.md`](slice-host-notification.md).
+**Estado:** acordado (2026-06-24).  
+**Alcance actual:** `GET /api/experiences`, `POST /api/requests`, `GET /api/requests` (persistencia slice 2.1).
 
 ---
 
@@ -75,10 +75,51 @@ Detalle notificación: [`slice-host-notification.md`](slice-host-notification.md
 
 | Código | Cuándo | Cuerpo |
 |--------|--------|--------|
-| `201` | Reserva válida y notificación enviada | `{ "ok": true }` |
-| `400` | Datos inválidos (no se notifica) | `{ "ok": false, "errors": [...] }` |
-| `503` | Reserva válida pero fallo al notificar al anfitrión | `{ "ok": false, "message": "Unable to notify host" }` |
+| `201` | Reserva válida, guardada y notificación enviada | `{ "ok": true, "id": 1 }` |
+| `400` | Datos inválidos (no se guarda ni notifica) | `{ "ok": false, "errors": [...] }` |
+| `503` | Reserva válida y **guardada**, pero fallo al notificar al anfitrión | `{ "ok": false, "message": "Unable to notify host" }` |
 | `405` | Método no `POST` | — |
+
+- `id`: entero positivo, único por solicitud guardada.
+- En `503` el cuerpo **no** incluye `id` (la solicitud ya está persistida; consultar con `GET /api/requests`).
+
+---
+
+## `GET /api/requests` (listado — slice 2.1)
+
+Devuelve las solicitudes guardadas, **más recientes primero**. Sin autenticación en esta fase.
+
+### Response
+
+#### `200 OK`
+
+```json
+[
+  {
+    "id": 1,
+    "experienceId": 1,
+    "experienceTitle": "Cinema",
+    "visitorEmail": "visitor@example.com",
+    "comment": "Saturday afternoon would work best for me",
+    "nativeEnglishSpeaker": true,
+    "createdAt": "2026-06-24T10:15:30Z"
+  }
+]
+```
+
+- `experienceTitle` resuelto desde el catálogo.
+- `createdAt`: instante UTC en ISO-8601.
+- Lista vacía `[]` si no hay solicitudes.
+
+#### `405 Method Not Allowed`
+
+Solo se admite `GET` y `POST` en esta ruta.
+
+### Ejemplo `curl`
+
+```bash
+curl -s http://localhost:8080/api/requests
+```
 
 ---
 
@@ -91,3 +132,4 @@ Detalle notificación: [`slice-host-notification.md`](slice-host-notification.md
 | 2026-05-23 | Slice actual = solo GET; POST aplazado; `nativeEnglishSpeaker` sustituye `yearsInMadrid`. |
 | 2026-05-23 | `id` de experiencias y `experienceId` pasan de string a integer (`1` = cinema, `2` = casa de campo). |
 | 2026-05-24 | `POST /api/requests`: notificación al anfitrión; respuesta `503` si falla el envío. |
+| 2026-06-24 | Slice 2.1: `GET /api/requests`; `201` con `id`; persistencia en `503`. |

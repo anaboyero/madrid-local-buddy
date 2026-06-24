@@ -1,22 +1,23 @@
 # Próxima sesión
 
-**Última sesión:** 2026-06-14 (slice 1.6 cerrada).
+**Última sesión:** 2026-06-24 (slice 2.1 cerrada — PASO 6).
 
 ## Acuerdos y estado
 
-- **Fase 1 API (1.2–1.6):** **completa** — catálogo, reserva, email log/Resend, JAR documentado.
-- **Slice 1.6:** hecha — README, `.env.example`, smoke M-01–M-04 OK, 36 tests verdes.
-- **Smoke perfil B (JAR):** opcional; no ejecutado en cierre 1.6 (ya validado en 1.5 con `spring-boot:run`).
+- **Slice 2.1:** **hecha** — H2, `GET /api/requests`, `id` en `201`, 40 tests verdes.
+- **Fase 1b (UI):** aplazada.
+- **Smoke manual M-01/M-02** (reinicio JAR + `./data/`): OK.
 
-## Próximo trabajo acordado (orden)
+## Próximo trabajo (sin orden cerrado)
 
-1. **Fase 1b** — UI de la primera historia (landing, formulario, consumo API).
-2. Mejoras técnicas opcionales: test subproceso JAR en CI (enfoque B de 1.6).
+1. Fase 1b — UI cuando se retome.
+2. Fase 2+ — más experiencias, admin, calendario, etc.
+3. Opcional: smoke JAR en CI (ex 1.7).
 
 ## Siguiente PASO
 
-**PASO 1** — debate y spec **Fase 1b** (primera pantalla / stack UI). Nueva conversación recomendada.
+**PASO 1** de la siguiente slice vertical (cuando se elija alcance).
 
 ## Frase para retomar
 
-> Fase 1 hecha. Siguiente: debatir UI (1b).
+> Slice 2.1 hecha. Elegir siguiente slice (UI 1b u otra capacidad API).
